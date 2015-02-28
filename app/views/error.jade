@@ -1,0 +1,10 @@
+extends layout
+block content
+  .container
+    .panel.panel-warning
+      .panel-heading 错误
+      .panel-body
+        h1=message
+        h2=error.status
+        if error.stack
+          pre=error.stack

@@ -1,0 +1,13 @@
+extends layout
+block content
+  .container
+    h1 #{title}
+    .table-responsive
+      table.table.table-bordered.table-hover
+        tr
+          td 用户名
+          td 密码
+        each user in users
+          tr
+            td #{user.username}
+            td #{user.pwd}

@@ -1,0 +1,14 @@
+extends ../layout
+block content
+  .container
+    h1 登录
+    form.form-horizontal(method='post' action='/user/login')
+      .form-group
+        label.col-md-2(for='inputUsername') 用户名
+          .col-md-10
+            input#inputUsername.form-control(type='text', placeholder='用户名', name='username')
+      .form-group
+        label.col-md-2(for='inputPassword') 密码
+          .col-md-10
+            input#inputPassword.form-control(type='password', placeholder='密码', name='password')
+      button.btn.btn-default(type='submit') 登录

@@ -5,10 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var multer  = require('multer');
-
-var routes = require('./app/routes/index');
-var routes = require('./app/routes/index');
-var users = require('./app/routes/users');
 var moment = require('moment');
 var app = express();
 
@@ -25,22 +21,25 @@ app.use(multer({ dest: './app/uploads/'}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'app/public')));
 
-app.use('/', routes);
-app.use('/users', users);
+var routes = require('./app/routes/routes.js')(app);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
+    var err = new Error('您访问的网页不见了');
     err.status = 404;
     next(err);
 });
 
-// error handlers
+//
+//app.set('env','production');
 
+// error handlers
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.locals.pretty = true;
+    console.log('debug mode');
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
@@ -53,6 +52,7 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
+    console.log(err);
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
