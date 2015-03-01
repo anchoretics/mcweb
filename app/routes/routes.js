@@ -10,4 +10,5 @@ module.exports = function(app){
 	app.get('/user/list', user.list);
 	app.get('/user/new', user.new);
 	app.get('/user/login', user.login);
+	app.get('/user/logout', user.logout);
 };

@@ -16,7 +16,10 @@ var data = {
 user.login = function(req, res, next){
 	res.render('user/login',data);
 };
-
+user.logout = function(req, res, next){
+	req.logout();
+	res.redirect('/');
+};
 user.list = function(req, res, next){
 	res.render('user/list',data);
 };
