@@ -12,3 +12,5 @@ block content
           .col-md-10
             input#inputPassword.form-control(type='password', placeholder='密码', name='password')
       button.btn.btn-default(type='submit') 登录
+      if message
+        p #{message}
