@@ -1,4 +1,5 @@
 huffman-code.sublime-workspace
 huffman-code.sublime-project
 app/uploads*
+**/*.DS_Store
 .DS_Store
