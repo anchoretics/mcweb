@@ -11,10 +11,8 @@ var mongoose = require('mongoose');
 var MongoStore = require('connect-mongo')(session);
 var app = express();
 var config = require('./config.json');
-//var session2 = require('express-session');
 
 var passport = require('passport')
-var LocalStrategy = require('passport-local').Strategy;
 
 mongoose.connect(config.dburl);
 // view engine setup
@@ -24,8 +22,8 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 // app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(multer({ dest: './app/uploads/'}));
 app.use(cookieParser());
 app.use(session({
@@ -47,42 +45,14 @@ app.use(express.static(path.join(__dirname, 'app/public')));
 //加载passport功能
 app.use(passport.initialize());
 app.use(passport.session());
-//自定义认证策略
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    var _user = {
-        id: '1',
-        username: 'admin',
-        password: '123456'
-    }; // 可以配置通过数据库方式读取登陆账号
-
-    if (username !== _user.username) {
-        return done(null, false, { message: 'Incorrect username.' });
-    }
-    if (password !== _user.password) {
-        return done(null, false, { message: 'Incorrect password.' });
-    }
-    return done(null, _user);
-  }
-));
-
-app.post('/user/login', passport.authenticate('local', 
-    {
-        successRedirect: '/',
-        failureRedirect: '/user/login'
-    }
-));
-
-passport.serializeUser(function (user, done) {//保存user对象
-    //req.session.user = user;
-    done(null, user);//可以通过数据库方式操作
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+passport.deserializeUser(function (user, done) {
+    done(null, user);
 });
 
-passport.deserializeUser(function (user, done) {//删除user对象
-    //req.session.user = null;
-    done(null, user);//可以通过数据库方式操作
-});
-
+//加载路由
 var routes = require('./app/routes/routes.js')(app);
 
 

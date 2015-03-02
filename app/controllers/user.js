@@ -13,12 +13,18 @@ var data = {
 	]
 };
 
+user.doLogin = function(req, res, next){
+    var _user = req.body;
+    req.login(_user,function(err) {
+		if (err) {
+			return next(err);
+		}
+		return res.redirect('/users/' + encodeURIComponent(req.user.username));
+    });
+};
+
 user.login = function(req, res, next){
 	res.render('user/login',{title:'登录'});
-};
-user.logout = function(req, res, next){
-	req.logout();
-	res.redirect('/');
 };
 user.list = function(req, res, next){
 	res.render('user/list',data);
@@ -28,6 +34,12 @@ user.new = function(req, res, next){
 };
 user.save = function(req, res, next){
 	//
+};
+
+user.logout = function(req, res, next){
+    req.logout();
+    delete req.app.locals.user;
+    res.redirect('/');
 };
 
 module.exports = user;

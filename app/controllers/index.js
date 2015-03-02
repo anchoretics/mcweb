@@ -1,12 +1,6 @@
-var express = require('express');
-var router = express.Router();
+var index = {};
+index.index = function(req, res, next) {
+	res.render('index', { title: '首页'});
+};
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  console.log('session, user');
-  console.log(req.session);
-  console.log(req.user);
-  res.render('index', { title: '首页' });
-});
-
-module.exports = router;
+module.exports = index;

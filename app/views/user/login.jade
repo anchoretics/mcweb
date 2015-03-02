@@ -1,16 +1,25 @@
 extends ../layout
 block content
-  .container
-    h1 登录
-    form.form-horizontal(method='post' action='/user/login')
-      .form-group
-        label.col-md-2(for='inputUsername') 用户名
-          .col-md-10
+  if user
+    script history.back();
+  else
+    .container
+      h1 登录
+      form.form-horizontal(method='post' action='/user/login')
+        .form-group
+          label.col-sm-5.control-label(for='inputUsername') 用户名：
+          .col-sm-4
             input#inputUsername.form-control(type='text', placeholder='用户名', name='username')
-      .form-group
-        label.col-md-2(for='inputPassword') 密码
-          .col-md-10
+        .form-group
+          label.col-sm-5.control-label(for='inputPassword') 密码：
+          .col-sm-4
             input#inputPassword.form-control(type='password', placeholder='密码', name='password')
-      button.btn.btn-default(type='submit') 登录
-      if message
-        p #{message}
+        .form-group
+          .col-sm-offset-5.col-sm-4
+            .checkbox
+              label
+                input(type='checkbox', name='remember_me')
+                |  记住我
+        .form-group
+          .col-sm-offset-5.col-sm-4
+              button.btn.btn-default(type='submit') 登录

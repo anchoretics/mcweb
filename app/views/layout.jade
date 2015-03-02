@@ -45,12 +45,16 @@ html
             li#nav_user_online
               a(href='#') 在线玩家
           .nav.navbar-nav.navbar-right
-            li
-              a(href='/user/login') 登录
-            li
-              a(href='/user/logout') 退出
-            li
-              a(href='/user/register') 注册
+            if user
+              li.center-block
+                a 欢迎您：#{user.username}
+              li
+                a(href='/user/logout') 退出
+            else
+              li
+                a(href='/user/login') 登录
+              li
+                a(href='/user/register') 注册
     // 轮播图 小设备不显示，md lg 显示
     .container.clearfix.visible-md-block.visible-lg-block
       #carousel-example-generic.carousel.slide(data-ride='carousel')
