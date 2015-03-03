@@ -6,13 +6,20 @@ block content
     .container
       h1 登录
       form.form-horizontal(method='post' action='/user/login')
+        if error
+          .form-group
+            .alert.alert-warning.alert-dismissible.fade.in(role="alert")
+              button.close(data-dismiss="alert",aria-label="Close")
+                span(aria-hidden="true") &times;
+              strong 错误：
+              | #{error}
         .form-group
           label.col-sm-5.control-label(for='inputUsername') 用户名：
-          .col-sm-4
+          .col-sm-3
             input#inputUsername.form-control(type='text', placeholder='用户名', name='username')
         .form-group
           label.col-sm-5.control-label(for='inputPassword') 密码：
-          .col-sm-4
+          .col-sm-3
             input#inputPassword.form-control(type='password', placeholder='密码', name='password')
         .form-group
           .col-sm-offset-5.col-sm-4

@@ -58,7 +58,7 @@ var routes = require('./app/routes/routes.js')(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('您访问的网页不见了');
+    var err = new Error('您访问的网页好像被苦力怕吃掉了 :(');
     err.status = 404;
     next(err);
 });

@@ -1,0 +1,73 @@
+// 导航    
+style.
+  body{
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  .carousel{
+    height: 500px;
+    backgroud-color: #000;
+  }
+  .carousel .item{
+    height: 500px;
+    backgroud-color: #000;
+  }
+  .carousel img{
+    width: 100%;
+  }
+.navbar.navbar-inverse.navbar-fixed-top
+  .container
+    .navbar-header
+      button.navbar-toggle.collapsed(data-toggle='collapse',data-target='#bs-example-navbar-collapse-1')
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand(href='/') Minecraft 秀
+    .collapse.navbar-collapse#bs-example-navbar-collapse-1
+      .nav.navbar-nav
+        li#nav_jt
+          a(href='#') 游戏截图
+        li#nav_user_list
+          a(href='/user/list') 玩家列表
+        li#nav_user_online
+          a(href='#') 在线玩家
+      .nav.navbar-nav.navbar-right
+        if user
+          li.center-block
+            a 欢迎您：#{user.username}
+          li
+            a(href='/users/#{user.username}') [控制台]
+          li
+            a(href='/user/logout') 退出
+        else
+          li
+            a(href='/user/login') 登录
+          li
+            a(href='/user/register') 注册
+// 轮播图 小设备不显示，md lg 显示
+.container.clearfix.visible-xs-block
+  #carousel-example-generic.carousel.slide(data-ride='carousel')
+    // Indicators
+    ol.carousel-indicators
+      li.active(data-target='#carousel-example-generic', data-slide-to='0')
+      li(data-target='#carousel-example-generic', data-slide-to='1')
+      li(data-target='#carousel-example-generic', data-slide-to='2')
+    // Wrapper for slides
+    .carousel-inner(role='listbox')
+      .item.active
+        img(src='/images/carousel/1.jpg', alt='')
+        .carousel-caption
+      .item
+        img(src='/images/carousel/2.jpg', alt='')
+        .carousel-caption
+      .item
+        img(src='/images/carousel/3.jpg', alt='')
+        .carousel-caption
+    // Controls
+    a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
+      span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+      span.sr-only Previous
+    a.right.carousel-control(href='#carousel-example-generic', role='button', data-slide='next')
+      span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+      span.sr-only Next

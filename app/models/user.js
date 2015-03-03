@@ -4,16 +4,17 @@ var SALT_WORK_FACTOR = 13;
 
 var UserSchema = new mongoose.Schema({
 
-	loginName: {
+	username: {
 		unique: true,
 		type: String,
 		index: true
  	},
+ 	nickname: String,
+  	password: String,
  	name: {
  		first: String,
  		last: String
  	},
-  	password: String,
 	  // 0: nomal user
 	  // 1: verified user
 	  // 2: professonal user
@@ -38,29 +39,19 @@ var UserSchema = new mongoose.Schema({
 UserSchema.pre('save', function(next) {
 	var user = this;
 	if (this.isNew) {
-		this.meta.createAt = this.meta.updateAt = Date.now()
+		var salt = bcrypt.genSaltSync(SALT_WORK_FACTOR);
+		user.password = bcrypt.hashSync(user.password, salt);
+		this.meta.createAt = this.meta.updateAt = Date.now();
 	}
 	else {
 		this.meta.updateAt = Date.now()
 	}
-	bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-		if (err)
-			return next(err);
-		bcrypt.hash(user.password, salt, function(err, hash) {
-		  	if (err)
-		  		return next(err);
-		  	user.password = hash;
-		  	next();
-		});
-	});
+	next();
 });
 
 UserSchema.methods = {
 	comparePwd: function(_password, cb) {
-		bcrypt.compare(_password, this.password, function(err, isMatch) {
-		  	if (err) return cb(err)
-				cb(null, isMatch);
-		});
+		return bcrypt.compareSync(_password, this.password);
 	}
 };
 

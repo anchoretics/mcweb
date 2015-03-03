@@ -1,19 +1,17 @@
 var express = require('express');
 var index = require('../controllers/index');
 var user = require('../controllers/user');
+var users = require('../controllers/users');
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function(app){
 
-	// 给全局设置user变量
-	app.get('*', function(req, res, next){
-		if(req.user || !app.locals.user){
-			app.locals.user = req.user;
-		}
-		next();
+	// 将user对象设置到locals
+	app.use(function(req, res, next) {
+	  	res.locals.user = req.session.passport.user || null;
+	    next();
 	});
-	
 	//首页
 	app.get('/', index.index);
 
@@ -23,6 +21,7 @@ module.exports = function(app){
 	app.get('/user/login', user.login);
 	app.post('/user/login', user.doLogin)
 	app.get('/user/logout', user.logout);
-	//后台管理
+	//用户控制台
+	app.get('/users/:username', user.authLogin, users.index);
 	
 };
