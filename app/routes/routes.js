@@ -21,7 +21,12 @@ module.exports = function(app){
 	app.get('/user/login', user.login);
 	app.post('/user/login', user.doLogin)
 	app.get('/user/logout', user.logout);
+
+
 	//用户控制台
-	app.get('/users/:username', user.authLogin, users.index);
+	app.get('/users/', user.authLogin, users.index);
+	app.get('/users/info', user.authLogin, users.info);
+	app.get('/users/loginlog', user.authLogin, users.loginlog);
+	app.get('/users/chatlog', user.authLogin, users.chatlog);
 	
 };
