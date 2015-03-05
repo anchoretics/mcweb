@@ -1,5 +1,5 @@
 {
-	"dburl": "mongodb://mc:123456@127.0.0.1/minecraft",
+	"dburl": "mongodb://anchor:520521@127.0.0.1/minecraft",
 	"dbuser": "",
 	"dbpwd": ""
 
