@@ -14,7 +14,10 @@ var config = require('./config.json');
 
 var passport = require('passport')
 
-mongoose.connect(config.dburl);
+mongoose.connect(config.dburl,function(err){
+    if(err)
+        console.log(err);
+});
 // view engine setup
 app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'jade');
