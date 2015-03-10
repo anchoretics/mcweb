@@ -24,6 +24,11 @@ var UserSchema = new mongoose.Schema({
 		type: Number,
 		default: 0
 	},
+	online: {
+		state: Boolean,
+		time: Date,
+		ip: String
+	},
 	meta: {
 		createAt: {
 			type: Date,

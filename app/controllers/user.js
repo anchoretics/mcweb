@@ -70,9 +70,6 @@ user.logout = function(req, res, next){
 user.authLogin = function(req, res, next){
     if(!req.session.passport.user){
         res.render('user/login',{error: '你需要登录才能操作!'});
-    }else if(req.session.passport.user.username != req.params.username){
-        //禁止访问别的username
-        res.redirect('/users/' + req.session.passport.user.username);
     }else{
         next();
     }

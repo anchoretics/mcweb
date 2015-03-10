@@ -25,5 +25,8 @@
     "qs": "^2.3.3",
     "serve-favicon": "~2.2.0",
     "supervisor": "^0.6.0"
+  },
+  "devDependencies": {
+    "mongoose": "^3.8.24"
   }
 }

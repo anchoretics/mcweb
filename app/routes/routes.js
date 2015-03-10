@@ -2,6 +2,8 @@ var express = require('express');
 var index = require('../controllers/index');
 var user = require('../controllers/user');
 var users = require('../controllers/users');
+var poster = require('../controllers/poster');
+
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -21,7 +23,14 @@ module.exports = function(app){
 	app.get('/user/login', user.login);
 	app.post('/user/login', user.doLogin)
 	app.get('/user/logout', user.logout);
+
+
 	//用户控制台
-	app.get('/users/:username', user.authLogin, users.index);
+	app.get('/users/', user.authLogin, users.index);
+	app.get('/users/info', user.authLogin, users.info);
+	app.get('/users/loginlog', user.authLogin, users.loginlog);
+	app.get('/users/chatlog', user.authLogin, users.chatlog);
 	
+	//插件提交数据
+	app.post('/post/userlogin', poster.userlogin);
 };
