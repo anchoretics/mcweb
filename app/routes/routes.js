@@ -4,7 +4,7 @@ var user = require('../controllers/user');
 var users = require('../controllers/users');
 var poster = require('../controllers/poster');
 
-var passport = require('passport')
+var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function(app){
@@ -21,7 +21,7 @@ module.exports = function(app){
 	app.get('/user/list', user.list);
 	app.get('/user/new', user.new);
 	app.get('/user/login', user.login);
-	app.post('/user/login', user.doLogin)
+	app.post('/user/login', user.doLogin);
 	app.get('/user/logout', user.logout);
 
 
