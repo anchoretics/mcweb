@@ -12,7 +12,7 @@ var MongoStore = require('connect-mongo')(session);
 var app = express();
 var config = require('./config.json');
 
-var passport = require('passport')
+var passport = require('passport');
 
 mongoose.connect(config.dburl,function(err){
     if(err)
