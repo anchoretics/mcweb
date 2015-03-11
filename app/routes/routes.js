@@ -4,11 +4,7 @@ var user = require('../controllers/user');
 var users = require('../controllers/users');
 var poster = require('../controllers/poster');
 
-<<<<<<< HEAD
-var passport = require('passport')
-=======
 var passport = require('passport');
->>>>>>> f0661c48b56996f572e5e281dea396328e9f83e5
 var LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function(app){
