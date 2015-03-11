@@ -37,7 +37,7 @@ user.doLogin = function(req, res, next){
                         req.session.cookie.expires = new Date(Date.now() + year);
                         req.session.cookie.maxAge = year;
                     }
-                    return res.redirect('/users/' + encodeURIComponent(req.user.username));
+                    return res.redirect('/users/');
                 });
             }
     	}
