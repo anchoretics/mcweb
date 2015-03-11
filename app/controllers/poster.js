@@ -1,6 +1,6 @@
 var poster = {};
-poster.userlogin = function(req, res, next){
-	console.log('poster userlogin :');
+poster.post = function(req, res, next){
+	console.log('poste data :');
 	console.log(req.body);
 	res.end();
 };

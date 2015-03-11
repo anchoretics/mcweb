@@ -26,6 +26,7 @@ user.doLogin = function(req, res, next){
     		if(!u.comparePwd(_user.password)){
                 res.render('user/login',{error:'密码不正确!'});
             }else{
+                _user.password = null;
                 req.login(_user,function(err) {
                     if (err) {
                         return next(err);

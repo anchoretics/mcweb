@@ -32,5 +32,5 @@ module.exports = function(app){
 	app.get('/users/chatlog', user.authLogin, users.chatlog);
 	
 	//插件提交数据
-	app.post('/post/userlogin', poster.userlogin);
+	app.post('/post/data', poster.post);
 };
