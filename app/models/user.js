@@ -9,12 +9,16 @@ var UserSchema = new mongoose.Schema({
 		type: String,
 		index: true
  	},
- 	nickname: String,
+ 	customname: String,
+ 	displayname: String,
+ 	name: String,
+ 	listname: String,
+ 	allowfly: Boolean,
+ 	world: String,
+ 	gamemode: String,
+ 	kickmessage: String,
+
   	password: String,
- 	name: {
- 		first: String,
- 		last: String
- 	},
 	  // 0: nomal user
 	  // 1: verified user
 	  // 2: professonal user
@@ -24,11 +28,6 @@ var UserSchema = new mongoose.Schema({
 		type: Number,
 		default: 0
 	},
-	online: {
-		state: Boolean,
-		time: Date,
-		ip: String
-	},
 	meta: {
 		createAt: {
 			type: Date,
@@ -37,7 +36,15 @@ var UserSchema = new mongoose.Schema({
 		updateAt: {
 		  	type: Date,
 		  	default: Date.now()
-		}
+		},
+		lastloginAt: {
+			type: Date
+		},
+	 	lastlocation: {
+	 		x: String,
+	 		y: String,
+	 		z: String
+	 	}
 	}
 });
 
