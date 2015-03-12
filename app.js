@@ -65,8 +65,10 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-//
-//app.set('env','production');
+//设置生产变量
+if(config.env && config.env == 'production'){
+    app.set('env','production');
+}
 
 // error handlers
 // development error handler
