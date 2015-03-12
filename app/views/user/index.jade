@@ -4,14 +4,16 @@ block content
     .row
       .col-sm-2
         .list-group
-          a.list-group-item.active(href='#', data-url='/users/info')
+          a.list-group-item.active(href='#', data-url='/user/info')
             | 个人信息
-          a.list-group-item(href='#', data-url='/users/loginlog')
+          a.list-group-item(href='#', data-url='/user/loginlog')
             | 登录日志
-          a.list-group-item(href='#', data-url='/users/chatlog')
+          a.list-group-item(href='#', data-url='/user/chatlog')
             | 聊天记录
+          a.list-group-item(href='#', data-url='/user/commandlog')
+            | 指令记录
       .col-sm-10
-        .panel.panel-default(style='padding: 20px;')#content
+        .panel.panel-default#content
   script.
     function getContent(url){
       $.get(url,function(data){
@@ -25,4 +27,4 @@ block content
         $(this).addClass('active');
         getContent($(this).data('url'));
       });
-    getContent('/users/info');
+    getContent('/user/info');

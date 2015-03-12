@@ -1,5 +1,8 @@
-var user = {};
+var Chat = require('../models/chat');
+var Login = require('../models/login');
+var Command = require('../models/command');
 var User = require('../models/user');
+var user = {};
 
 var data = { 
 	title:'用户列表', 
@@ -27,7 +30,7 @@ user.doLogin = function(req, res, next){
                 res.render('user/login',{error:'密码不正确!'});
             }else{
                 _user.password = null;
-                req.login(_user,function(err) {
+                req.login(u,function(err) {
                     if (err) {
                         return next(err);
                     }
@@ -37,7 +40,7 @@ user.doLogin = function(req, res, next){
                         req.session.cookie.expires = new Date(Date.now() + year);
                         req.session.cookie.maxAge = year;
                     }
-                    return res.redirect('/users/');
+                    return res.redirect('/user/');
                 });
             }
     	}
@@ -48,15 +51,16 @@ user.login = function(req, res, next){
 	res.render('user/login',{title:'登录'});
 };
 user.list = function(req, res, next){
-	res.render('user/list',data);
-};
-user.new = function(req, res, next){
-    var _user = new User({
-        username: "mc",
-        password: "123456"
+    User.find({},function(err, d) {
+        res.render('user/list',{users:d});
     });
-    _user.save();
-	res.render('new',{title:'新增用户'});
+};
+
+user.online = function(req, res, next){
+    Login.find({online: true},function(err, d) {
+        
+        res.render('user/online',{users:d});
+    });
 };
 user.save = function(req, res, next){
 	//
@@ -66,6 +70,34 @@ user.logout = function(req, res, next){
     req.logout();
     delete req.app.locals.user;
     res.redirect('/');
+};
+
+user.index = function(req, res, next){
+    res.render('user/index',{});
+};
+user.info = function(req, res, next){
+    var data = {
+    };
+    res.render('user/info',data);
+};
+user.loginlog = function(req, res, next){
+    Login.find({}).populate('user').exec(function(err, d) {
+        
+        res.render('user/loginlog',{logs:d});
+    });
+};
+user.chatlog = function(req, res, next){
+    Chat.find({}).populate('user').exec(function(err, d) {
+        
+        res.render('user/chatlog',{logs:d});
+    });
+};
+
+user.commandlog = function(req, res, next){
+    Command.find({}).populate('user').exec(function(err, d) {
+        
+        res.render('user/commandlog',{logs:d});
+    });
 };
 
 user.authLogin = function(req, res, next){

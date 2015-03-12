@@ -1,0 +1,18 @@
+
+if user
+  h1 登录名：#{user.username}
+  div(style='padding-left:20px;')
+    p
+      if(user.online)
+        | 在线状态：在线
+      else
+        | 在线状态：离线
+    p.
+      上次登录时间： #{ time2string(user.meta.lastloginAt) }
+    p.
+      上次登录IP： #{ user.meta.lasthostaddress }
+    p.
+      上次登录坐标：
+    p           x:  #{ user.meta.lastlocation.x }
+    p           y:  #{ user.meta.lastlocation.y }
+    p           z:  #{ user.meta.lastlocation.z }

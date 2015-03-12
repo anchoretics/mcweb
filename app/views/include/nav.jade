@@ -11,17 +11,17 @@
     .collapse.navbar-collapse#bs-example-navbar-collapse-1
       .nav.navbar-nav
         li#nav_jt
-          a(href='#') 游戏截图
+          a(href='/user/photo') 游戏截图
         li#nav_user_list
           a(href='/user/list') 玩家列表
         li#nav_user_online
-          a(href='#') 在线玩家
+          a(href='/user/online') 在线玩家
       .nav.navbar-nav.navbar-right
         if user
           li.center-block
             a 欢迎您：#{user.username}
           li
-            a(href='/users/') [控制台]
+            a(href='/user/') [控制台]
           li
             a(href='/user/logout') 退出
         else

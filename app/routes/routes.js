@@ -1,8 +1,8 @@
 var express = require('express');
 var index = require('../controllers/index');
 var user = require('../controllers/user');
-var users = require('../controllers/users');
 var poster = require('../controllers/poster');
+var moment = require('moment');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -17,20 +17,29 @@ module.exports = function(app){
 	//首页
 	app.get('/', index.index);
 
-	//用户操作
+	//用户管理
 	app.get('/user/list', user.list);
-	app.get('/user/new', user.new);
+	app.get('/user/online', user.online);
 	app.get('/user/login', user.login);
 	app.post('/user/login', user.doLogin);
 	app.get('/user/logout', user.logout);
 
-
-	//用户控制台
-	app.get('/users/', user.authLogin, users.index);
-	app.get('/users/info', user.authLogin, users.info);
-	app.get('/users/loginlog', user.authLogin, users.loginlog);
-	app.get('/users/chatlog', user.authLogin, users.chatlog);
+	app.get('/user/', user.authLogin, user.index);
+	app.get('/user/info', user.authLogin, user.info);
+	app.get('/user/loginlog', user.authLogin, user.loginlog);
+	app.get('/user/chatlog', user.authLogin, user.chatlog);
+	app.get('/user/commandlog', user.authLogin, user.commandlog);
 	
 	//插件提交数据
 	app.post('/post/data', poster.post);
+
+
+	app.locals.time2string = function(obj,format){
+		if(!format){
+			format = 'YYYY-MM-DD hh:ss:mm';
+		}
+		if(obj){
+			return moment(obj).format(format);
+		}
+	};
 };

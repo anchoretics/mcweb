@@ -1,0 +1,24 @@
+
+.table-responsive
+  table.table.table-bordered
+    tr.success
+      td 时间
+      td 用户名
+      td 类型
+      td 消息
+      td IP地址
+      td X
+      td Y
+      td Z
+    each log in logs
+      tr
+        td #{ time2string(log.meta.createAt) }
+        td
+          if log.user
+            | #{ log.user.username }
+        td #{ log.type }
+        td #{ log.message }
+        td #{ log.hostaddress }
+        td #{ log.meta.location.x }
+        td #{ log.meta.location.y }
+        td #{ log.meta.location.z }

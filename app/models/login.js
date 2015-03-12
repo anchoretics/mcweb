@@ -6,7 +6,9 @@ var LoginSchema = new mongoose.Schema({
 	hostname: String,
 	hostaddress: String,
 
-	user: { 
+	//type=login,logout
+	type: String,
+	user: {
 		type: ObjectId,
 		ref: 'User'
 	},

@@ -17,7 +17,10 @@ var UserSchema = new mongoose.Schema({
  	world: String,
  	gamemode: String,
  	kickmessage: String,
-
+ 	online: { 
+ 		type: Boolean,
+ 		default: false
+ 	},
   	password: String,
 	  // 0: nomal user
 	  // 1: verified user
@@ -44,7 +47,8 @@ var UserSchema = new mongoose.Schema({
 	 		x: String,
 	 		y: String,
 	 		z: String
-	 	}
+	 	},
+	 	lasthostaddress: String
 	}
 });
 
@@ -64,6 +68,10 @@ UserSchema.pre('save', function(next) {
 UserSchema.methods = {
 	comparePwd: function(_password, cb) {
 		return bcrypt.compareSync(_password, this.password);
+	},
+	changePwd: function(_pwd){
+		var salt = bcrypt.genSaltSync(SALT_WORK_FACTOR);
+		this.password = bcrypt.hashSync(_pwd, salt);
 	}
 };
 

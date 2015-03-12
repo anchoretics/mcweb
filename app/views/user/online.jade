@@ -1,17 +1,13 @@
 extends ../layout
 block content
   .container
-    h1 所有用户列表
+    h1 在线用户列表
     .table-responsive
       table.table.table-bordered.table-hover
         tr
           td 用户名
           td 在线状态
-          td 上次登录时间
-          td 上次登录IP
-          td X
-          td Y
-          td Z
+          td 上线时间
         each u in users
           tr
             td #{u.username}
@@ -21,9 +17,6 @@ block content
               else
                 | 离线
             td #{ time2string(u.meta.lastloginAt) }
-            td #{ u.meta.lasthostaddress }
-            td #{ u.meta.lastlocation.x }
-            td #{ u.meta.lastlocation.y }
-            td #{ u.meta.lastlocation.z }
+
   script.
-    $('#nav_user_list').addClass('active');
+    $('#nav_user_online').addClass('active');
