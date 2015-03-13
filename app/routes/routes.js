@@ -29,6 +29,7 @@ module.exports = function(app){
 	app.get('/user/loginlog', user.authLogin, user.loginlog);
 	app.get('/user/chatlog', user.authLogin, user.chatlog);
 	app.get('/user/commandlog', user.authLogin, user.commandlog);
+	app.get('/user/update', user.authLogin, user.update);
 	
 	//插件提交数据
 	app.post('/post/data', poster.post);
@@ -39,7 +40,7 @@ module.exports = function(app){
 			format = 'YYYY-MM-DD HH:ss:mm';
 		}
 		if(obj){
-			return moment(obj).format(format);
+			return moment(new Date(obj)).format(format);
 		}
 	};
 };

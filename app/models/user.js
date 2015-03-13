@@ -34,12 +34,14 @@ var UserSchema = new mongoose.Schema({
 	},
 	meta: {
 		createAt: {
-			type: Date,
-			default: Date.now()
+			type: Number, 
+			max: 10,
+			default: new Date().getTime()
 		},
 		updateAt: {
-		  	type: Date,
-		  	default: Date.now()
+			type: Number, 
+			max: 10,
+			default: new Date().getTime()
 		},
 		lastloginAt: {
 			type: Date

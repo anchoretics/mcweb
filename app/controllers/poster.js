@@ -38,8 +38,8 @@ poster.saveChat = function(err, d, res) {
 				hostaddress: d.hostaddress,
 				user: u._id,
 				meta: {
-					createAt: new Date(d.time),
-					updateAt: new Date(d.time),
+					createAt: d.time,
+					updateAt: d.time,
 					location: {
 				 		x: d.location_x,
 				 		y: d.location_y,
@@ -68,7 +68,7 @@ poster.saveLogin = function(err, d, res) {
 			}else{
 				u.online = true;
 			}
-			u.meta.lastloginAt = new Date(d.time);
+			u.meta.lastloginAt = d.time;
 			u.meta.lastlocation = {
 		 		x: d.location_x,
 		 		y: d.location_y,
@@ -91,9 +91,9 @@ poster.saveLogin = function(err, d, res) {
 				password: '123456',
 				online: true,
 				meta: {
-					createAt: new Date(d.time),
-					updateAt: new Date(d.time),
-					lastloginAt: new Date(d.time),
+					createAt: d.time,
+					updateAt: d.time,
+					lastloginAt: d.time,
 				 	lastlocation: {
 				 		x: d.location_x,
 				 		y: d.location_y,
@@ -139,8 +139,8 @@ poster.saveCommand = function(err, d, res) {
 				hostname: d.hostname,
 				hostaddress: d.hostaddress,
 				meta: {
-					createAt: new Date(d.time),
-					updateAt: new Date(d.time),
+					createAt: d.time,
+					updateAt: d.time,
 					location: {
 				 		x: d.location_x,
 				 		y: d.location_y,
@@ -168,8 +168,8 @@ poster.saveLoginLog = function(err, d, res, u) {
 		hostname: d.hostname,
 		hostaddress: d.hostaddress,
 		meta: {
-			createAt: new Date(d.time),
-			updateAt: new Date(d.time),
+			createAt: d.time,
+			updateAt: d.time,
 			location: {
 		 		x: d.location_x,
 		 		y: d.location_y,

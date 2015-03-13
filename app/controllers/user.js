@@ -39,15 +39,13 @@ user.login = function(req, res, next){
 	res.render('user/login',{title:'登录'});
 };
 user.list = function(req, res, next){
-    User.find({},function(err, d) {
+    User.find({}).sort({ username: 'asc' }).exec(function(err, d) {
         res.render('user/list',{users:d});
     });
 };
 
 user.online = function(req, res, next){
-    User.find({online: true},function(err, d) {
-        
-    console.log(req);
+    User.find({online: true}).sort({ username: 'asc' }).exec(function(err, d) {
         res.render('user/online',{users:d});
     });
 };
@@ -74,13 +72,13 @@ user.loginlog = function(req, res, next){
     if(!req.user.op){
         _q.user = req.user._id;
     }
-    Login.find(_q).populate('user').exec(function(err, d) {
+    Login.find(_q).populate('user').sort({'user.username':-1}).exec(function(err, d) {
         res.render('user/loginlog',{logs:d});
     });
 };
+
 user.chatlog = function(req, res, next){
-    Chat.find({}).populate('user').exec(function(err, d) {
-        
+    Chat.find({}).populate('user').sort('meta.createAt').exec(function(err, d) {
         res.render('user/chatlog',{logs:d});
     });
 };
@@ -91,9 +89,12 @@ user.commandlog = function(req, res, next){
         _q.user = req.user._id;
     }
     Command.find(_q).populate('user').exec(function(err, d) {
-        
         res.render('user/commandlog',{logs:d});
     });
+};
+
+user.update = function(req, res, next){
+    
 };
 
 user.authLogin = function(req, res, next){
