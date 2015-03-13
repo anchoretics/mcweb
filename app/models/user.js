@@ -16,6 +16,7 @@ var UserSchema = new mongoose.Schema({
  	allowfly: Boolean,
  	world: String,
  	gamemode: String,
+ 	op: Boolean,
  	kickmessage: String,
  	online: { 
  		type: Boolean,

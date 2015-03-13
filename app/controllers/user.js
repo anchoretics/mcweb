@@ -2,20 +2,8 @@ var Chat = require('../models/chat');
 var Login = require('../models/login');
 var Command = require('../models/command');
 var User = require('../models/user');
-var user = {};
 
-var data = { 
-	title:'用户列表', 
-	users: [
-		{
-			username:'张三',
-			pwd:'******'
-		},{
-			username:'李四',
-			pwd:'******'
-		} 
-	]
-};
+var user = {};
 
 user.doLogin = function(req, res, next){
     var _user = req.body;
@@ -59,6 +47,7 @@ user.list = function(req, res, next){
 user.online = function(req, res, next){
     User.find({online: true},function(err, d) {
         
+    console.log(req);
         res.render('user/online',{users:d});
     });
 };
@@ -81,8 +70,11 @@ user.info = function(req, res, next){
     res.render('user/info',data);
 };
 user.loginlog = function(req, res, next){
-    Login.find({}).populate('user').exec(function(err, d) {
-        
+    var _q = {};
+    if(!req.user.op){
+        _q.user = req.user._id;
+    }
+    Login.find(_q).populate('user').exec(function(err, d) {
         res.render('user/loginlog',{logs:d});
     });
 };
@@ -94,7 +86,11 @@ user.chatlog = function(req, res, next){
 };
 
 user.commandlog = function(req, res, next){
-    Command.find({}).populate('user').exec(function(err, d) {
+    var _q = {};
+    if(!req.user.op){
+        _q.user = req.user._id;
+    }
+    Command.find(_q).populate('user').exec(function(err, d) {
         
         res.render('user/commandlog',{logs:d});
     });

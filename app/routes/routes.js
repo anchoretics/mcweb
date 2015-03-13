@@ -42,5 +42,4 @@ module.exports = function(app){
 			return moment(obj).format(format);
 		}
 	};
-	//app.locals.Math = Math;
 };
