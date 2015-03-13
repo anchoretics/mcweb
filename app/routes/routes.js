@@ -37,7 +37,7 @@ module.exports = function(app){
 
 	app.locals.time2string = function(obj,format){
 		if(!format){
-			format = 'YYYY-MM-DD HH:ss:mm';
+			format = 'YYYY-MM-DD HH:mm:ss';
 		}
 		if(obj){
 			return moment(new Date(obj)).format(format);
