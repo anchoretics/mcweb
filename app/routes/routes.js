@@ -36,10 +36,11 @@ module.exports = function(app){
 
 	app.locals.time2string = function(obj,format){
 		if(!format){
-			format = 'YYYY-MM-DD hh:ss:mm';
+			format = 'YYYY-MM-DD HH:ss:mm';
 		}
 		if(obj){
 			return moment(obj).format(format);
 		}
 	};
+	//app.locals.Math = Math;
 };

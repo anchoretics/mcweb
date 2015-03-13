@@ -19,6 +19,6 @@
         td #{ log.type }
         td #{ log.message }
         td #{ log.hostaddress }
-        td #{ log.meta.location.x }
-        td #{ log.meta.location.y }
-        td #{ log.meta.location.z }
+        td #{ Math.round(log.meta.location.x*10)/10 }
+        td #{ Math.round(log.meta.location.y*10)/10 }
+        td #{ Math.round(log.meta.location.z*10)/10 }

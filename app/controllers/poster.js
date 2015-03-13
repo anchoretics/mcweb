@@ -6,6 +6,11 @@ var User = require('../models/user');
 var poster = {};
 poster.post = function(req, res, next){
 	var _type = req.body.type;
+	var _data = req.body;
+	//坐标保留一位小数点
+	_data.location_x = Math.round(_data.location_x*10)/10;
+	_data.location_y = Math.round(_data.location_y*10)/10;
+	_data.location_z = Math.round(_data.location_z*10)/10;
 	switch(_type){
 		case 'chat':
 			poster.saveChat(null,req.body,res);

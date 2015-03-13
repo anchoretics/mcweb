@@ -57,7 +57,7 @@ user.list = function(req, res, next){
 };
 
 user.online = function(req, res, next){
-    Login.find({online: true},function(err, d) {
+    User.find({online: true},function(err, d) {
         
         res.render('user/online',{users:d});
     });
