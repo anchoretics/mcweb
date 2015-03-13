@@ -39,7 +39,7 @@ user.login = function(req, res, next){
 	res.render('user/login',{title:'登录'});
 };
 user.list = function(req, res, next){
-    User.find({}).sort({ username: 'asc' }).exec(function(err, d) {
+    User.find({}).sort('username').exec(function(err, d) {
         res.render('user/list',{users:d});
     });
 };
