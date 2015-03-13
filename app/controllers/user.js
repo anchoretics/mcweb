@@ -72,7 +72,7 @@ user.loginlog = function(req, res, next){
     if(!req.user.op){
         _q.user = req.user._id;
     }
-    Login.find(_q).populate('user').sort({'user.username':-1}).exec(function(err, d) {
+    Login.find(_q).populate('user').sort('meta.createAt').exec(function(err, d) {
         res.render('user/loginlog',{logs:d});
     });
 };
@@ -88,7 +88,7 @@ user.commandlog = function(req, res, next){
     if(!req.user.op){
         _q.user = req.user._id;
     }
-    Command.find(_q).populate('user').exec(function(err, d) {
+    Command.find(_q).populate('user').sort('meta.createAt').exec(function(err, d) {
         res.render('user/commandlog',{logs:d});
     });
 };
@@ -99,7 +99,7 @@ user.update = function(req, res, next){
 
 user.authLogin = function(req, res, next){
     if(!req.session.passport.user){
-        res.render('user/login',{error: '你需要登录才能操作!'});
+        res.render('user/login',{error: '你需要登录才能操作! 用户名密码是你登录游戏的用户名密码'});
     }else{
         next();
     }
