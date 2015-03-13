@@ -16,12 +16,12 @@ var LoginSchema = new mongoose.Schema({
 	meta: {
 		createAt: {
 			type: Number, 
-			max: 10,
+			max: 13,
 			default: new Date().getTime()
 		},
 		updateAt: {
 			type: Number, 
-			max: 10,
+			max: 13,
 			default: new Date().getTime()
 		},
 		location: {
