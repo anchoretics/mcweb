@@ -8,9 +8,11 @@ var bodyParser = require('body-parser');
 var multer  = require('multer');
 var mongoose = require('mongoose');
 var MongoStore = require('connect-mongo')(session);
-var app = express();
-var config = require('./config.json');
 
+var app = express();
+var paginate = require('express-paginate');
+app.use(paginate.middleware(15, 100));
+var config = require('./config.json');
 var passport = require('passport');
 
 mongoose.connect(config.dburl,function(err){

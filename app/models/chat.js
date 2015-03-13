@@ -30,5 +30,6 @@ var ChatSchema = new mongoose.Schema({
 
 });
 
+ChatSchema.plugin(require('mongoose-paginate'));
 var Chat = mongoose.model('Chat',ChatSchema);
 module.exports = Chat;

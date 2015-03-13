@@ -1,0 +1,23 @@
+if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
+  nav
+    ul.pagination
+      if paginate.hasPreviousPages
+        li
+          a(href=paginate.href(true) aria-label='Previous')
+            span(aria-hidden='true') 上一页
+
+      - for (var i=0; i<pageCount; i++) {
+          li
+            a(href=paginate.href()) #{i}
+      - }
+
+      - if(pageCount > 10) {
+          li
+            a(href=paginate.href()) ...
+      - }
+
+      if paginate.hasNextPages(pageCount)
+        li
+          a(href=paginate.href(), aria-label='Next')
+            span(aria-hidden='true') 下一页
+- console.log(paginate);

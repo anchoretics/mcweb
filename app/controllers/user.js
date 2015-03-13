@@ -39,7 +39,7 @@ user.login = function(req, res, next){
 	res.render('user/login',{title:'登录'});
 };
 user.list = function(req, res, next){
-    User.find({}).sort('username').exec(function(err, d) {
+    User.find().sort('username').exec(function(err, d) {
         res.render('user/list',{users:d});
     });
 };
@@ -72,15 +72,28 @@ user.loginlog = function(req, res, next){
     if(!req.user.op){
         _q.user = req.user._id;
     }
-    Login.find(_q).populate('user').sort('meta.createAt').exec(function(err, d) {
+    Login.find(_q).populate('user').sort('-meta.createAt').exec(function(err, d) {
         res.render('user/loginlog',{logs:d});
     });
 };
 
 user.chatlog = function(req, res, next){
-    Chat.find({}).populate('user').sort('meta.createAt').exec(function(err, d) {
-        res.render('user/chatlog',{logs:d});
-    });
+    // Chat.find()
+    //     .populate('user', 'username')
+    //     .sort('-meta.createAt')
+    //     .exec(function(err, d) {
+    //         res.render('user/chatlog',{logs:d});
+    // });
+    Chat.paginate({}, req.query.page, req.query.limit, function(err, pageCount, chats, itemCount) {
+            if (err) return next(err);
+            console.log(pageCount+','+itemCount);
+            res.render('user/chatlog', {
+                logs: chats,
+                currentPage: req.query.page || 1,
+                pageCount: pageCount,
+                itemCount: itemCount
+        });
+    },{ columns:null,populate:{ path:'user', select: 'username'},sortBy: '-meta.createAt' });
 };
 
 user.commandlog = function(req, res, next){
@@ -88,7 +101,7 @@ user.commandlog = function(req, res, next){
     if(!req.user.op){
         _q.user = req.user._id;
     }
-    Command.find(_q).populate('user').sort('meta.createAt').exec(function(err, d) {
+    Command.find(_q).populate('user').sort('-meta.createAt').exec(function(err, d) {
         res.render('user/commandlog',{logs:d});
     });
 };
