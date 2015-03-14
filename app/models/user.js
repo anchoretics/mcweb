@@ -93,6 +93,6 @@ UserSchema.virtual('name.full').get(function () {
   	return this.name.first + ' ' + this.name.last;
 });
 
+UserSchema.plugin(require('mongoose-paginate'));
 var User = mongoose.model('User', UserSchema);
-
 module.exports = User;

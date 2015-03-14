@@ -4,13 +4,13 @@ block content
     .row
       .col-sm-2
         .list-group
-          a.list-group-item.active(href='/user/info')
+          a.list-group-item(href='/user/info')#nav_user_info
             | 个人信息
-          a.list-group-item(href='/user/loginlog')
+          a.list-group-item(href='/user/loginlog')#nav_user_loginlog
             | 登录日志
-          a.list-group-item(href='/user/chatlog')
+          a.list-group-item(href='/user/chatlog')#nav_user_chatlog
             | 聊天记录
-          a.list-group-item(href='/user/commandlog')
+          a.list-group-item(href='/user/commandlog')#nav_user_commandlog
             | 指令记录
       .col-sm-10
         .container-fluid

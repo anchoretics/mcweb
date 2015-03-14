@@ -25,5 +25,6 @@ block content
             td #{ Math.round(u.meta.lastlocation.x*10)/10 }
             td #{ Math.round(u.meta.lastlocation.y*10)/10 }
             td #{ Math.round(u.meta.lastlocation.z*10)/10 }
+    include ../include/_paginate
   script.
     $('#nav_user_list').addClass('active');

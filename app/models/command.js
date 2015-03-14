@@ -29,5 +29,6 @@ var CommandSchema = new mongoose.Schema({
 
 });
 
+CommandSchema.plugin(require('mongoose-paginate'));
 var Command = mongoose.model('Command',CommandSchema);
 module.exports = Command;

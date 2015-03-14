@@ -1,22 +1,26 @@
-
-.table-responsive
-  table.table.table-bordered
-    tr.success
-      td 时间
-      td 用户名
-      td 消息
-      td IP地址
-      td X
-      td Y
-      td Z
-    each log in logs
-      tr
-        td #{ time2string(log.meta.createAt) }
-        td
-          if log.user
-            | #{ log.user.username }
-        td #{ log.message }
-        td #{ log.hostaddress }
-        td #{ Math.round(log.meta.location.x*10)/10 }
-        td #{ Math.round(log.meta.location.y*10)/10 }
-        td #{ Math.round(log.meta.location.z*10)/10 }
+extends index
+block rightContent
+  .table-responsive
+    table.table.table-bordered
+      tr.success
+        td 时间
+        td 用户名
+        td 消息
+        td IP地址
+        td X
+        td Y
+        td Z
+      each log in logs
+        tr
+          td #{ time2string(log.meta.createAt) }
+          td
+            if log.user
+              | #{ log.user.username }
+          td #{ log.message }
+          td #{ log.hostaddress }
+          td #{ Math.round(log.meta.location.x*10)/10 }
+          td #{ Math.round(log.meta.location.y*10)/10 }
+          td #{ Math.round(log.meta.location.z*10)/10 }
+    include ../include/_paginate
+  script.
+    $('#nav_user_commandlog').addClass('active');

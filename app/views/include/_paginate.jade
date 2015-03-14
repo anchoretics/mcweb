@@ -3,21 +3,120 @@ if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
     ul.pagination
       if paginate.hasPreviousPages
         li
+          a(href=paginate.href({page:1}) aria-label='Previous')
+            span(aria-hidden='true') 首页
+        li
           a(href=paginate.href(true) aria-label='Previous')
             span(aria-hidden='true') 上一页
+      else
+        li.disabled
+          a(aria-label='Previous')
+            span(aria-hidden='true') 首页
+        li.disabled
+          a(aria-label='Previous')
+            span(aria-hidden='true') 上一页
+      //-
+        li
+          a(href=paginate.href({page:currentPage-2})) #{currentPage-2}
+        li
+          a(href=paginate.href({page:currentPage-1})) #{currentPage-1}
+        li.active
+          a #{currentPage}
+        li
+          a(href=paginate.href({page:currentPage+1})) #{currentPage+1}
+        li
+          a(href=paginate.href({page:currentPage+2})) #{currentPage+2}
 
-      - for (var i=0; i<pageCount; i++) {
-          li
-            a(href=paginate.href()) #{i}
+      - var _linkCount = linkCount || 5;
+      - var _linkCountHalfCeil = Math.floor(_linkCount/2);
+      - var _canNext = true;
+      - var _canPre = true;
+      //- 先判断是否需要输出...
+      - if ( (_linkCountHalfCeil+2) > currentPage ) {
+        - _canPre = false;
       - }
+      - if ( (pageCount-currentPage) <= _linkCountHalfCeil ) {
+        - _canNext = false;
+      - }
+      //- 输出前面的...
+      - if (_canPre){
+        - if ( (currentPage-_linkCountHalfCeil*2-1) < 1 ){
+            li
+              a(href=paginate.href({page:1})) ...
+        - }
+        - else{
+            li
+              a(href=paginate.href({page:currentPage-_linkCountHalfCeil*2-1})) ...
+        - }
+      - }
+      - else {
+          li.disabled
+            a ...
+      - }
+      
+      //- 补全当最后一组链接不够linkCount的数量的情况下，导致缺失的前部分链接
+      - if ( !_canNext ) {
+        //- 当没有后面的...的时候才需要补后面漏掉的
+        - for (var i=0; i<( _linkCountHalfCeil - ( pageCount - currentPage) ) ; i++) {
+          - if ( (pageCount - _linkCountHalfCeil - _linkCountHalfCeil + i) > 0 ) {
+              li
+                a(href=paginate.href({page:pageCount - _linkCountHalfCeil - _linkCountHalfCeil + i})) #{ pageCount - _linkCountHalfCeil - _linkCountHalfCeil + i }
+          - }
+        - }
+      - }
+      //- 循环输出中间正常的链接
+      - for (var i=(_linkCountHalfCeil-_linkCountHalfCeil*2); i<= _linkCountHalfCeil; i++ ) {
+        - if ( (currentPage+i)<= pageCount && (currentPage+i)>0 ) {
+          - if (i==0){
+              li.active
+                a #{currentPage+i}
+          - }
+          - else{
+              li
+                a(href=paginate.href({page:currentPage+i})) #{currentPage+i}
+          - }
+        - }
+      - }
+      //- 补全当最后一组链接不够linkCount的数量的情况下，导致缺失的后部分链接
+      - if ( !_canPre ) {
+        //- 当没有前面的...的时候才需要补后面漏掉的
+        - for (var i=0; i<( _linkCountHalfCeil - ( currentPage - 1) ) ; i++) {
+          - if ( (currentPage+_linkCountHalfCeil+i+1) <= pageCount ) {
+              li
+                a(href=paginate.href({page:currentPage+_linkCountHalfCeil+i+1})) #{ currentPage+_linkCountHalfCeil+i+1 }
+          - }
+        - }
+      - }
+      //- 输出后面的...
+      - if(_canNext) {
+        - if ( (currentPage+_linkCountHalfCeil*2+1) > pageCount ){
+            li
+              a(href=paginate.href({page:pageCount})) ...
+        - }else{
+            li
+              a(href=paginate.href({page:currentPage+_linkCountHalfCeil*2+1})) ...
+        - }
 
-      - if(pageCount > 10) {
-          li
-            a(href=paginate.href()) ...
+      - }
+      - else {
+          li.disabled
+            a ...
       - }
 
       if paginate.hasNextPages(pageCount)
         li
           a(href=paginate.href(), aria-label='Next')
             span(aria-hidden='true') 下一页
-- console.log(paginate);
+        li
+          a(href=paginate.href({page:pageCount}) aria-label='Previous')
+            span(aria-hidden='true') 尾页
+      else
+        li.disabled
+          a(aria-label='Next')
+            span(aria-hidden='true') 下一页
+        li.disabled
+          a(href=paginate.href({page:pageCount}) aria-label='Previous')
+            span(aria-hidden='true') 尾页
+      li
+        a
+          spam 第#{currentPage}/#{pageCount}页

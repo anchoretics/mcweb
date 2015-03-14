@@ -28,7 +28,7 @@ user.doLogin = function(req, res, next){
                         req.session.cookie.expires = new Date(Date.now() + year);
                         req.session.cookie.maxAge = year;
                     }
-                    return res.redirect('/user/');
+                    res.redirect('/user/info');
                 });
             }
     	}
@@ -39,15 +39,29 @@ user.login = function(req, res, next){
 	res.render('user/login',{title:'登录'});
 };
 user.list = function(req, res, next){
-    User.find().sort('username').exec(function(err, d) {
-        res.render('user/list',{users:d});
-    });
+    User.paginate({}, req.query.page, req.query.limit, function(err, pageCount, users, itemCount) {
+            if (err) return next(err);
+            console.log(pageCount+','+itemCount);
+            res.render('user/list', {
+                users: users,
+                currentPage: req.query.page || 1,
+                pageCount: pageCount,
+                itemCount: itemCount
+        });
+    },{ columns:null,populate:null,sortBy: 'username' });
 };
 
 user.online = function(req, res, next){
-    User.find({online: true}).sort({ username: 'asc' }).exec(function(err, d) {
-        res.render('user/online',{users:d});
-    });
+    User.paginate({online: true}, req.query.page, req.query.limit, function(err, pageCount, users, itemCount) {
+            if (err) return next(err);
+            console.log(pageCount+','+itemCount);
+            res.render('user/online', {
+                users: users,
+                currentPage: req.query.page || 1,
+                pageCount: pageCount,
+                itemCount: itemCount
+        });
+    },{ columns:null,populate:null,sortBy: 'username' });
 };
 user.save = function(req, res, next){
 	//
@@ -72,23 +86,24 @@ user.loginlog = function(req, res, next){
     if(!req.user.op){
         _q.user = req.user._id;
     }
-    Login.find(_q).populate('user').sort('-meta.createAt').exec(function(err, d) {
-        res.render('user/loginlog',{logs:d});
-    });
+    Login.paginate(_q, req.query.page, req.query.limit, function(err, pageCount, logs, itemCount) {
+            if (err) return next(err);
+            console.log(pageCount+','+itemCount);
+            res.render('user/loginlog', {
+                logs: logs,
+                currentPage: req.query.page || 1,
+                pageCount: pageCount,
+                itemCount: itemCount
+        });
+    },{ columns:null,populate:{ path:'user', select: 'username'},sortBy: '-meta.createAt' });
 };
 
 user.chatlog = function(req, res, next){
-    // Chat.find()
-    //     .populate('user', 'username')
-    //     .sort('-meta.createAt')
-    //     .exec(function(err, d) {
-    //         res.render('user/chatlog',{logs:d});
-    // });
-    Chat.paginate({}, req.query.page, req.query.limit, function(err, pageCount, chats, itemCount) {
+    Chat.paginate({}, req.query.page, req.query.limit, function(err, pageCount, logs, itemCount) {
             if (err) return next(err);
             console.log(pageCount+','+itemCount);
             res.render('user/chatlog', {
-                logs: chats,
+                logs: logs,
                 currentPage: req.query.page || 1,
                 pageCount: pageCount,
                 itemCount: itemCount
@@ -101,9 +116,16 @@ user.commandlog = function(req, res, next){
     if(!req.user.op){
         _q.user = req.user._id;
     }
-    Command.find(_q).populate('user').sort('-meta.createAt').exec(function(err, d) {
-        res.render('user/commandlog',{logs:d});
-    });
+    Command.paginate(_q, req.query.page, req.query.limit, function(err, pageCount, logs, itemCount) {
+            if (err) return next(err);
+            console.log(pageCount+','+itemCount);
+            res.render('user/commandlog', {
+                logs: logs,
+                currentPage: req.query.page || 1,
+                pageCount: pageCount,
+                itemCount: itemCount
+        });
+    },{ columns:null,populate:{ path:'user', select: 'username'},sortBy: '-meta.createAt' });
 };
 
 user.update = function(req, res, next){

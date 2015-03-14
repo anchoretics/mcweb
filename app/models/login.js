@@ -31,5 +31,6 @@ var LoginSchema = new mongoose.Schema({
 
 });
 
+LoginSchema.plugin(require('mongoose-paginate'));
 var Login = mongoose.model('Login',LoginSchema);
 module.exports = Login;
