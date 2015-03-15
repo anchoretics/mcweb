@@ -15,17 +15,6 @@ if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
         li.disabled
           a(aria-label='Previous')
             span(aria-hidden='true') 上一页
-      //-
-        li
-          a(href=paginate.href({page:currentPage-2})) #{currentPage-2}
-        li
-          a(href=paginate.href({page:currentPage-1})) #{currentPage-1}
-        li.active
-          a #{currentPage}
-        li
-          a(href=paginate.href({page:currentPage+1})) #{currentPage+1}
-        li
-          a(href=paginate.href({page:currentPage+2})) #{currentPage+2}
 
       - var _linkCount = linkCount || 5;
       - var _linkCountHalfCeil = Math.floor(_linkCount/2);
