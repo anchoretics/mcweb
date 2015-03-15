@@ -3,13 +3,13 @@ block rightContent
   .table-responsive
     table.table.table-bordered
       tr.success
-        td 时间
-        td 用户名
-        td 消息
-        td IP地址
-        td X
-        td Y
-        td Z
+        td(width='150px') 时间
+        td(width='120px') 用户名
+        td(width='auto') 消息
+        td(width='110px') IP地址
+        td(width='80px') X
+        td(width='50px') Y
+        td(width='80px') Z
       each log in logs
         tr
           td #{ time2string(log.meta.createAt) }
