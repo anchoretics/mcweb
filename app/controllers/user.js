@@ -41,7 +41,6 @@ user.login = function(req, res, next){
 user.list = function(req, res, next){
     User.paginate({}, req.query.page, req.query.limit, function(err, pageCount, users, itemCount) {
             if (err) return next(err);
-            console.log(pageCount+','+itemCount);
             res.render('user/list', {
                 users: users,
                 currentPage: req.query.page || 1,
@@ -54,7 +53,6 @@ user.list = function(req, res, next){
 user.online = function(req, res, next){
     User.paginate({online: true}, req.query.page, req.query.limit, function(err, pageCount, users, itemCount) {
             if (err) return next(err);
-            console.log(pageCount+','+itemCount);
             res.render('user/online', {
                 users: users,
                 currentPage: req.query.page || 1,
@@ -88,7 +86,6 @@ user.loginlog = function(req, res, next){
     }
     Login.paginate(_q, req.query.page, req.query.limit, function(err, pageCount, logs, itemCount) {
             if (err) return next(err);
-            console.log(pageCount+','+itemCount);
             res.render('user/loginlog', {
                 logs: logs,
                 currentPage: req.query.page || 1,
@@ -101,7 +98,6 @@ user.loginlog = function(req, res, next){
 user.chatlog = function(req, res, next){
     Chat.paginate({}, req.query.page, req.query.limit, function(err, pageCount, logs, itemCount) {
             if (err) return next(err);
-            console.log(pageCount+','+itemCount);
             res.render('user/chatlog', {
                 logs: logs,
                 currentPage: req.query.page || 1,
@@ -113,19 +109,24 @@ user.chatlog = function(req, res, next){
 
 user.commandlog = function(req, res, next){
     var _q = {};
+    if(req.query.u){
+        _q.user = req.query.u;
+    }
+    if(req.query.q){
+        _q.message = /req.query.q/;
+    }
     if(!req.user.op){
         _q.user = req.user._id;
     }
     Command.paginate(_q, req.query.page, req.query.limit, function(err, pageCount, logs, itemCount) {
             if (err) return next(err);
-            console.log(pageCount+','+itemCount);
             res.render('user/commandlog', {
                 logs: logs,
                 currentPage: req.query.page || 1,
                 pageCount: pageCount,
                 itemCount: itemCount
         });
-    },{ columns:null,populate:{ path:'user', select: 'username'},sortBy: '-meta.createAt' });
+    },{ columns:null,populate:{ path:'user', select: '_id username'},sortBy: '-meta.createAt' });
 };
 
 user.update = function(req, res, next){

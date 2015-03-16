@@ -15,7 +15,7 @@ block rightContent
           td #{ time2string(log.meta.createAt) }
           td
             if log.user
-              | #{ log.user.username }
+              a(href='/user/commandlog?u=#{ log.user._id }') #{ log.user.username }
           td #{ log.message }
           td #{ log.hostaddress }
           td #{ Math.round(log.meta.location.x*10)/10 }
