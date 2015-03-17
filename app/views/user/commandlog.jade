@@ -1,5 +1,18 @@
 extends index
 block rightContent
+  .container-fluid(style='margin-bottom:10px;padding-right: 0px;padding-left: 0px;')
+    form#q_form(method='get',action='?')
+      if _q.username
+        .col-md-3.alert.alert-info.alert-dismissible(role='alert',style='margin-bottom: 0px;padding-top: 5px;height:34px;')
+          button.close(type='button',data-dismiss='alert',aria-label='Close')
+            span#q_user_close(aria-hidden='true') &times;
+          strong #{_q.username}
+        input#q_user_id(type='hidden',name='u',value=_q.user)
+      .col-md-4
+        .input-group
+          input.form-control(type='text',name='q',placeholder='要搜索的消息...',value=_q.q)
+          span.input-group-btn
+            button.btn.btn-default(type='submit') 搜索
   .table-responsive
     table.table.table-bordered
       tr.success
@@ -24,3 +37,7 @@ block rightContent
     include ../include/_paginate
   script.
     $('#nav_user_commandlog').addClass('active');
+    $('#q_user_close').on('click',function($this){
+        $('#q_user_id').remove();
+        $('#q_form').submit();
+      });

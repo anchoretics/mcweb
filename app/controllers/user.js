@@ -40,24 +40,24 @@ user.login = function(req, res, next){
 };
 user.list = function(req, res, next){
     User.paginate({}, req.query.page, req.query.limit, function(err, pageCount, users, itemCount) {
-            if (err) return next(err);
-            res.render('user/list', {
-                users: users,
-                currentPage: req.query.page || 1,
-                pageCount: pageCount,
-                itemCount: itemCount
+        if (err) return next(err);
+        res.render('user/list', {
+            users: users,
+            currentPage: req.query.page || 1,
+            pageCount: pageCount,
+            itemCount: itemCount
         });
     },{ columns:null,populate:null,sortBy: 'username' });
 };
 
 user.online = function(req, res, next){
     User.paginate({online: true}, req.query.page, req.query.limit, function(err, pageCount, users, itemCount) {
-            if (err) return next(err);
-            res.render('user/online', {
-                users: users,
-                currentPage: req.query.page || 1,
-                pageCount: pageCount,
-                itemCount: itemCount
+        if (err) return next(err);
+        res.render('user/online', {
+            users: users,
+            currentPage: req.query.page || 1,
+            pageCount: pageCount,
+            itemCount: itemCount
         });
     },{ columns:null,populate:null,sortBy: 'username' });
 };
@@ -85,24 +85,24 @@ user.loginlog = function(req, res, next){
         _q.user = req.user._id;
     }
     Login.paginate(_q, req.query.page, req.query.limit, function(err, pageCount, logs, itemCount) {
-            if (err) return next(err);
-            res.render('user/loginlog', {
-                logs: logs,
-                currentPage: req.query.page || 1,
-                pageCount: pageCount,
-                itemCount: itemCount
+        if (err) return next(err);
+        res.render('user/loginlog', {
+            logs: logs,
+            currentPage: req.query.page || 1,
+            pageCount: pageCount,
+            itemCount: itemCount
         });
     },{ columns:null,populate:{ path:'user', select: 'username'},sortBy: '-meta.createAt' });
 };
 
 user.chatlog = function(req, res, next){
     Chat.paginate({}, req.query.page, req.query.limit, function(err, pageCount, logs, itemCount) {
-            if (err) return next(err);
-            res.render('user/chatlog', {
-                logs: logs,
-                currentPage: req.query.page || 1,
-                pageCount: pageCount,
-                itemCount: itemCount
+        if (err) return next(err);
+        res.render('user/chatlog', {
+            logs: logs,
+            currentPage: req.query.page || 1,
+            pageCount: pageCount,
+            itemCount: itemCount
         });
     },{ columns:null,populate:{ path:'user', select: 'username'},sortBy: '-meta.createAt' });
 };
@@ -113,18 +113,23 @@ user.commandlog = function(req, res, next){
         _q.user = req.query.u;
     }
     if(req.query.q){
-        _q.message = /req.query.q/;
+        _q.message = new RegExp(req.query.q);
     }
     if(!req.user.op){
         _q.user = req.user._id;
     }
     Command.paginate(_q, req.query.page, req.query.limit, function(err, pageCount, logs, itemCount) {
-            if (err) return next(err);
-            res.render('user/commandlog', {
-                logs: logs,
-                currentPage: req.query.page || 1,
-                pageCount: pageCount,
-                itemCount: itemCount
+        if (err) return next(err);
+        if(logs.length>0 && _q.user){
+            _q.username = logs[0].user.username;
+        }
+        _q.q = req.query.q;
+        res.render('user/commandlog', {
+            logs: logs,
+            currentPage: req.query.page || 1,
+            pageCount: pageCount,
+            itemCount: itemCount,
+            _q: _q
         });
     },{ columns:null,populate:{ path:'user', select: '_id username'},sortBy: '-meta.createAt' });
 };
