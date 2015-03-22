@@ -3,7 +3,7 @@ var index = require('../controllers/index');
 var user = require('../controllers/user');
 var poster = require('../controllers/poster');
 var moment = require('moment');
-
+var socket = require('socket.io');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -43,4 +43,6 @@ module.exports = function(app){
 			return moment(new Date(obj)).format(format);
 		}
 	};
+
+
 };
