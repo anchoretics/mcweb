@@ -30,13 +30,15 @@ block rightContent
         addMsg(data);
     }
     function sendMsg(){
+      if($('#inputMessage').val()){
         socket.emit('new web message', { username: '#{user.username}', msg: $('#inputMessage').val(), time: new Date().getTime() });
         $('#inputMessage').val('');
         $('#inputMessage').focus();
+      }
     }
     function addMsg(data){
-        $('#chatPanel').append("<li class='list-group-item'>"+ data.username + " : " + data.msg +"</li>");
-        $('#chatPanel')[0].scrollTop = $('#chatPanel')[0].scrollHeight;
+      $('#chatPanel').append("<li class='list-group-item'>"+ data.username + " : " + data.msg +"</li>");
+      $('#chatPanel')[0].scrollTop = $('#chatPanel')[0].scrollHeight;
     }
     $(window).keydown(function (event) {
       // Auto-focus the current input when a key is typed
