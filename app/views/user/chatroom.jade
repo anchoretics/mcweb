@@ -48,7 +48,7 @@ block rightContent
         sendMsg();
       }
     });
-    var socket = io('http://192.168.2.14:3000/');
+    var socket = io();
     socket.on('web message', function(data){
         addMsg(data);
       });
