@@ -134,6 +134,9 @@ user.commandlog = function(req, res, next){
     },{ columns:null,populate:{ path:'user', select: '_id username'},sortBy: '-meta.createAt' });
 };
 
+user.chatroom = function(req, res, next){
+    res.render('user/chatroom');
+};
 user.update = function(req, res, next){
     
 };

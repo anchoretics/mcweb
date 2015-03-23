@@ -1,0 +1,58 @@
+extends index
+block rightContent
+  if user
+    .row
+      .col-md-10
+        .panel.panel-default
+          .panel-heading
+            | 欢迎：#{user.username} 进入游戏聊天室
+          ul.list-group#chatPanel
+          .panel-footer
+            .input-group
+              input.form-control#inputMessage(type='text',placeholder='输入内容')
+              span.input-group-btn
+                button.btn.btn-default(type='button',onclick='sendMsg();') 发送
+      .col-md-2
+        | 在线玩家
+  style.
+    #chatPanel{
+      height: 400px;
+      overflow-y: scroll;
+    }
+    .chatArea {
+      height: 100%;
+    }
+  script.
+    $('#nav_user_chatroom').addClass('active');
+  script(src='/socket.io/socket.io.js')
+  script.
+    function getMsg(data){
+        addMsg(data);
+    }
+    function sendMsg(){
+        socket.emit('new web message', { username: '#{user.username}', msg: $('#inputMessage').val(), time: new Date().getTime() });
+        $('#inputMessage').val('');
+        $('#inputMessage').focus();
+    }
+    function addMsg(data){
+        $('#chatPanel').append("<li class='list-group-item'>"+ data.username + " : " + data.msg +"</li>");
+        $('#chatPanel')[0].scrollTop = $('#chatPanel')[0].scrollHeight;
+    }
+    $(window).keydown(function (event) {
+      // Auto-focus the current input when a key is typed
+      if (!(event.ctrlKey || event.metaKey || event.altKey)) {
+        $('#inputMessage').focus();
+      }
+      // When the client hits ENTER on their keyboard
+      if (event.which === 13) {
+        sendMsg();
+      }
+    });
+    var socket = io('http://localhost:3000/');
+    socket.on('web message', function(data){
+        addMsg(data);
+      });
+    socket.on('posted message', function(data){
+        addMsg(data);
+      });
+    socket.emit('login', '#{user.username}');

@@ -12,9 +12,10 @@ block content
             | 聊天记录
           a.list-group-item(href='/user/commandlog')#nav_user_commandlog
             | 指令记录
+          a.list-group-item(href='/user/chatroom')#nav_user_chatroom
+            | 在线聊天
       .col-sm-10
-        .container-fluid
-          block rightContent
+        block rightContent
 //-
   script.
     function getContent(url){

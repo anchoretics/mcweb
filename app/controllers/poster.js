@@ -13,7 +13,7 @@ poster.post = function(req, res, next){
 	_data.location_z = Math.round(_data.location_z*10)/10;
 	switch(_type){
 		case 'chat':
-			poster.saveChat(null,req.body,res);
+			poster.saveChat(null,req.body,req,res);
 			break;
 		case 'login':
 			poster.saveLogin(null,req.body,res);
@@ -28,10 +28,10 @@ poster.post = function(req, res, next){
 			break;
 	}
 };
-poster.saveChat = function(err, d, res) {
+poster.saveChat = function(err, d, req, res) {
 	User.findOne({username: d.name},function(err, u) {
 		if(u){
-			var _chat = new Chat({
+			var _chatData = {
 				message: d.message,
 				format: d.format,
 				hostname: d.hostname,
@@ -46,10 +46,14 @@ poster.saveChat = function(err, d, res) {
 				 		z: d.location_z
 					}
 				}
-			});
+			};
+			var _chat = new Chat(_chatData);
 			_chat.save(function(err, d) {
 				if(err){
 					console.log(err);
+				}else{
+					_chatData.username = u.username;
+					req.app.socketio.emit('posted message', _chatData);
 				}
 				res.end();
 			});
