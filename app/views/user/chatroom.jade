@@ -48,11 +48,20 @@ block rightContent
         sendMsg();
       }
     });
-    var socket = io('http://localhost:3000/');
+    var socket = io('http://192.168.2.14:3000/');
     socket.on('web message', function(data){
         addMsg(data);
       });
     socket.on('posted message', function(data){
+        data.msg = data.message;
         addMsg(data);
+      });
+    socket.on('user join', function(data){
+        $('#chatPanel').append("<li class='list-group-item' style='text-align:center;'>"+ data.username + " : " + data.msg +"</li>");
+        $('#chatPanel')[0].scrollTop = $('#chatPanel')[0].scrollHeight;
+      });
+    socket.on('user left', function(data){
+        $('#chatPanel').append("<li class='list-group-item' style='text-align:center;'>"+ data.username + " : " + data.msg +"</li>");
+        $('#chatPanel')[0].scrollTop = $('#chatPanel')[0].scrollHeight;
       });
     socket.emit('login', '#{user.username}');

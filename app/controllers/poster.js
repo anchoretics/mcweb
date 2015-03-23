@@ -5,6 +5,7 @@ var User = require('../models/user');
 
 var poster = {};
 poster.post = function(req, res, next){
+	console.log(req.body.type);
 	var _type = req.body.type;
 	var _data = req.body;
 	//坐标保留一位小数点

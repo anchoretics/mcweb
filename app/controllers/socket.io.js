@@ -13,7 +13,10 @@ module.exports = function(server, app){
 		});
 		socket.on('login', function(username){
 			socket.username = username;
-			socket.broadcast.emit('user join', { msg: socket.username });
+			socket.broadcast.emit('user join', { username: socket.username, msg: '进入网站聊天室' });
+		});
+		socket.on('disconnect', function(data){
+			socket.broadcast.emit('user left', { username: socket.username, msg: '离开网站聊天室' });
 		});
 	});
 };
