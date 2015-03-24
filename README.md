@@ -18,10 +18,12 @@
   ```js
   #./start.sh
   ```
-  or
+  run
   ```js
   #node ./bin/www
-  #or
+  ```
+  supervisor
+  ```js
   #npm install supervisor -g
   #supervisor
   ```
