@@ -4,7 +4,7 @@
   npm install
   ```
 ##configure
-  config.json
+  vim config.json
   ```json
   {
   	"dburl": "mongodb://minecraft:123456@localhost/minecraft",
@@ -14,3 +14,7 @@
   }
   ```
 ##Usage
+  test
+  ```js
+  ./start.sh
+  ```
