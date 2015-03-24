@@ -1,10 +1,10 @@
 #Minecraft web manager
 ##Installation
   ```js
-  npm install
+  #npm install
   ```
 ##configure
-  vim config.json
+  #vim config.json
   ```json
   {
   	"dburl": "mongodb://minecraft:123456@localhost/minecraft",
@@ -16,5 +16,12 @@
 ##Usage
   test
   ```js
-  ./start.sh
+  #./start.sh
+  ```
+  or
+  ```js
+  #node ./bin/www
+  #or
+  #npm install supervisor -g
+  #supervisor
   ```
