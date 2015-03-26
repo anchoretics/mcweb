@@ -29,6 +29,7 @@ poster.post = function(req, res, next){
 			break;
 	}
 };
+
 poster.saveChat = function(err, d, req, res) {
 	User.findOne({username: d.name},function(err, u) {
 		if(u){
@@ -53,6 +54,7 @@ poster.saveChat = function(err, d, req, res) {
 				if(err){
 					console.log(err);
 				}else{
+					// 广播到web
 					_chatData.username = u.username;
 					req.app.socketio.emit('posted message', _chatData);
 				}

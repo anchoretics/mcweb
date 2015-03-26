@@ -31,7 +31,7 @@ block rightContent
     }
     function sendMsg(){
       if($('#inputMessage').val()){
-        socket.emit('new web message', { username: '#{user.username}', msg: $('#inputMessage').val(), time: new Date().getTime() });
+        socket.emit('new web message', { username: '#{user.username}', userID: '#{user._id}', ip: '#{req.ip}', msg: $('#inputMessage').val(), time: new Date().getTime() });
         $('#inputMessage').val('');
         $('#inputMessage').focus();
       }
@@ -66,4 +66,4 @@ block rightContent
         $('#chatPanel').append("<li class='list-group-item' style='text-align:center;'>"+ data.username + " : " + data.msg +"</li>");
         $('#chatPanel')[0].scrollTop = $('#chatPanel')[0].scrollHeight;
       });
-    socket.emit('login', '#{user.username}');
+    socket.emit('login', { username: '#{user.username}', userID: '#{user._id}' });

@@ -135,7 +135,7 @@ user.commandlog = function(req, res, next){
 };
 
 user.chatroom = function(req, res, next){
-    res.render('user/chatroom');
+    res.render('user/chatroom', {req: req});
 };
 user.update = function(req, res, next){
     
