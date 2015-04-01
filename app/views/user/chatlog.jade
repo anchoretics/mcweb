@@ -6,6 +6,7 @@ block rightContent
         td(width='151px') 时间
         td(width='120px') 用户名
         td(width='auto') 消息
+        td(width='50') 来源
         td(width='110px') IP地址
         td(width='80px') X
         td(width='50px') Y
@@ -17,6 +18,7 @@ block rightContent
             if log.user
               | #{ log.user.username }
           td #{ log.message }
+          td #{ log.source || 'game' }
           td #{ log.hostaddress }
           td #{ Math.round(log.meta.location.x*10)/10 }
           td #{ Math.round(log.meta.location.y*10)/10 }
