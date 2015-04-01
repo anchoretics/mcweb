@@ -15,10 +15,15 @@ app.use(paginate.middleware(15, 100));
 var config = require('./config.json');
 var passport = require('passport');
 
-mongoose.connect(config.dburl,function(err){
+var db = mongoose.connect(config.dburl,function(err){
     if(err)
         console.log(err);
 });
+db.on('error', console.error.bind(console, 'connect error: '));
+db.once('open', function(){
+    console.log('mongodb connected');
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'jade');
