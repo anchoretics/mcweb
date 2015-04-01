@@ -6,7 +6,7 @@ var ChatSchema = new mongoose.Schema({
 	format: String,
 	hostname: String,
 	hostaddress: String,
-
+	source: String,
 	user: { 
 		type: ObjectId,
 		ref: 'User'

@@ -17,6 +17,7 @@ module.exports = function(server, app){
 				message: data.msg,
 				hostname: data.ip,
 				hostaddress: data.ip,
+				source: 'web',
 				meta: {
 					createAt: data.time,
 					updateAt: data.time,

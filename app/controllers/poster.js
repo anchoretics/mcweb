@@ -5,7 +5,6 @@ var User = require('../models/user');
 
 var poster = {};
 poster.post = function(req, res, next){
-	console.log(req.body.type);
 	var _type = req.body.type;
 	var _data = req.body;
 	//坐标保留一位小数点
@@ -38,6 +37,7 @@ poster.saveChat = function(err, d, req, res) {
 				format: d.format,
 				hostname: d.hostname,
 				hostaddress: d.hostaddress,
+				source: 'game',
 				user: u._id,
 				meta: {
 					createAt: d.time,
