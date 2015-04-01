@@ -67,3 +67,8 @@ block rightContent
         $('#chatPanel')[0].scrollTop = $('#chatPanel')[0].scrollHeight;
       });
     socket.emit('login', { username: '#{user.username}', userID: '#{user._id}' });
+    // 如果未登录，就先登录再发送，其中data是未登录前发送到服务器，并由服务器又原样返回的
+    socket.on('nologin', function(data){
+        socket.emit('login', { username: '#{user.username}', userID: '#{user._id}' });
+        socket.emit('new web message', data);
+      });

@@ -8,7 +8,10 @@ module.exports = function(server, app){
 	io.on('connection', function(socket){
 
 		socket.on('new web message', function(data) {
-
+			if(!socket.username){
+				socket.emit('nologin',data);
+				return;
+			}
 			socket.emit('web message', data);
 			socket.broadcast.emit('web message', data);
 
