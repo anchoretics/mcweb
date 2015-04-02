@@ -1,6 +1,6 @@
 #Minecraft web manager
 ##Installation
-  ```js
+  ```javascript
   #npm install
   ```
 ##configure
@@ -15,15 +15,15 @@
   ```
 ##Usage
   test
-  ```js
+  ```javascript
   #./start.sh
   ```
   run
-  ```js
+  ```javascript
   #node ./bin/www
   ```
   supervisor
-  ```js
+  ```javascript
   #npm install supervisor -g
   #supervisor
   ```
