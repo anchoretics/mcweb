@@ -15,7 +15,7 @@
   ```
 ##Usage
   test
-  ```javascript
+  ```sh
   #./start.sh
   ```
   run
