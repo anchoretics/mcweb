@@ -13,6 +13,8 @@ block rightContent
       p.
         上次登录IP： #{ user.meta.lasthostaddress }
       p.
+        上次登录世界： #{ user.world }
+      p.
         上次登录坐标：
       p           x:  #{ Math.round(user.meta.lastlocation.x*10)/10 }
       p           y:  #{ Math.round(user.meta.lastlocation.y*10)/10 }
