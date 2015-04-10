@@ -25,6 +25,7 @@ poster.post = function(req, res, next){
 			poster.saveCommand(null,req.body,res);
 			break;
 		default:
+			console.log(req.body);
 			break;
 	}
 };
@@ -66,6 +67,7 @@ poster.saveChat = function(err, d, req, res) {
 	});
 
 };
+
 poster.saveLogin = function(err, d, res) {
 	User.findOne({username: d.name},function(err, u) {
 		//没有的user先增加
@@ -119,6 +121,7 @@ poster.saveLogin = function(err, d, res) {
 		}
 	});
 };
+
 poster.saveCommand = function(err, d, res) {
 	var _msg = d.message;
 	var _pwd;
