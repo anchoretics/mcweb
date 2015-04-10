@@ -25,7 +25,9 @@ poster.post = function(req, res, next){
 			poster.saveCommand(null,req.body,res);
 			break;
 		default:
+			console.log('--other post type--');
 			console.log(req.body);
+			res.end();
 			break;
 	}
 };
