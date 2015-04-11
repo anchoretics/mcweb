@@ -27,7 +27,10 @@ poster.post = function(req, res, next){
 			poster.saveCommand(null,req.body,res);
 			break;
 		case 'onlineUsers':
-			
+			poster.saveOnlineUsers(null, req, res);
+			break;
+		case 'serverStarted':
+			poster.serverStarted(null, res);
 			break;
 		default:
 			res.end();
@@ -200,4 +203,40 @@ poster.saveLoginLog = function(err, d, res, u) {
 	});
 };
 
+poster.saveOnlineUsers = function(err, req, res){
+	if(req.body && req.bydo.username){
+		// 将所有用户的在线状态设置成false
+		User.update({}, { $set: {online: false} }, function(err, users){
+			if(err){
+				console.log(err);
+			}else{
+				// 再设置在线用户的在线状态为true
+				User.find({username: { $in: req.bydo.username }},function(users){
+					users.forEach(function(user){
+						user.online = true;
+						user.save();
+					});
+				});
+			}
+		});
+	}else{
+		req.app.socketio.emit('onlineUsers', req.body);
+		res.end();
+	}
+
+};
+
+poster.serverStarted = function(err, res){
+	User.find({online: true}, function(err, users){
+		if(err){
+			console.log(err);
+		}else{
+			users.forEach(function(u){
+				u.online = false;
+				u.save();
+			});
+		}
+		res.end();
+	});
+};
 module.exports = poster;
