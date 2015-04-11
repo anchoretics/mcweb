@@ -7,10 +7,12 @@ var poster = {};
 poster.post = function(req, res, next){
 	var _type = req.body.type;
 	var _data = req.body;
-	//坐标保留一位小数点
-	_data.location_x = Math.round(_data.location_x*10)/10;
-	_data.location_y = Math.round(_data.location_y*10)/10;
-	_data.location_z = Math.round(_data.location_z*10)/10;
+	//处理坐标，只保留一位小数点
+	if(_data.location_x && _data.location_y && _data.location_z){
+		_data.location_x = Math.round(_data.location_x*10)/10;
+		_data.location_y = Math.round(_data.location_y*10)/10;
+		_data.location_z = Math.round(_data.location_z*10)/10;
+	}
 	switch(_type){
 		case 'chat':
 			poster.saveChat(null,req.body,req,res);
@@ -24,7 +26,11 @@ poster.post = function(req, res, next){
 		case 'command':
 			poster.saveCommand(null,req.body,res);
 			break;
+		case 'onlineUsers':
+			
+			break;
 		default:
+			res.end();
 			break;
 	}
 };
@@ -66,6 +72,7 @@ poster.saveChat = function(err, d, req, res) {
 	});
 
 };
+
 poster.saveLogin = function(err, d, res) {
 	User.findOne({username: d.name},function(err, u) {
 		//没有的user先增加
@@ -119,6 +126,7 @@ poster.saveLogin = function(err, d, res) {
 		}
 	});
 };
+
 poster.saveCommand = function(err, d, res) {
 	var _msg = d.message;
 	var _pwd;
