@@ -10,18 +10,22 @@
       a.navbar-brand(href='/') Minecraft 秀
     .collapse.navbar-collapse#bs-example-navbar-collapse-1
       .nav.navbar-nav
-        li#nav_jt
-          a(href='/user/photo') 游戏截图
         li#nav_user_list
           a(href='/user/list') 玩家列表
         li#nav_user_online
           a(href='/user/online') 在线玩家
+        li#nav_user_loginlog
+          a(href='/user/loginlog') 登录日志
+        li#nav_user_chatlog
+          a(href='/user/chatlog') 聊天记录
+        li#nav_user_commandlog
+          a(href='/user/commandlog') 指令记录
+        li#nav_user_chatroom
+          a(href='/user/chatroom') 在线聊天
       .nav.navbar-nav.navbar-right
         if user
-          li.center-block
-            a 欢迎您：#{user.username}
           li
-            a(href='/user/') [控制台]
+            a(href='/user/info') [我的资料]
           li
             a(href='/user/logout') 退出
           li

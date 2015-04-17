@@ -1,5 +1,5 @@
-extends index
-block rightContent
+extends layout
+block content
   if user
     .row
       .col-md-10
@@ -37,9 +37,15 @@ block rightContent
       }
     }
     function addMsg(data){
-      $('#chatPanel').append("<li class='list-group-item'>"+ data.username + " : " + data.msg +"</li>");
+      var _date = new Date(data.time);
+      var time_str = _date.getHours() + ':' + _date.getMinutes() + ':' + _date.getSeconds();
+      if(data.username == "#{user.username}"){
+        $('#chatPanel').append("<li class='list-group-item' style='text-align:right;'>"+ data.username + " : " + data.msg + "<span style='margin-left:10px;color:gray;'>"+time_str+"</span>" + "</li>");
+      }else{
+        $('#chatPanel').append("<li class='list-group-item'>" + "<span style='margin-right:10px;color:gray;'>"+time_str+"</span>" + data.username + " : " + data.msg +"</li>");
+      }
       $('#chatPanel')[0].scrollTop = $('#chatPanel')[0].scrollHeight;
-    }
+    }http://localhost:3000/
     $(window).keydown(function (event) {
       // Auto-focus the current input when a key is typed
       if (!(event.ctrlKey || event.metaKey || event.altKey)) {

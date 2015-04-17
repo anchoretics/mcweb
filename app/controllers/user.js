@@ -75,8 +75,7 @@ user.index = function(req, res, next){
     res.redirect('/user/info');
 };
 user.info = function(req, res, next){
-    var data = {
-    };
+    var data = {};
     res.render('user/info',data);
 };
 user.loginlog = function(req, res, next){

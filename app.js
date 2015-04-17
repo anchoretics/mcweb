@@ -37,7 +37,7 @@ app.use(multer({ dest: './app/uploads/'}));
 app.use(cookieParser());
 app.use(session({
     name: 'SESSIONID',
-    secret: 'minecraft',
+    secret: 'mc',
     cookie: {
         //maxAge: 10000
     },
