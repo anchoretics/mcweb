@@ -5,6 +5,7 @@ var User = require('../models/user');
 
 var poster = {};
 poster.post = function(req, res, next){
+	console.log(req.body);
 	var _type = req.body.type;
 	var _data = req.body;
 	//处理坐标，只保留一位小数点
@@ -204,18 +205,26 @@ poster.saveLoginLog = function(err, d, res, u) {
 };
 
 poster.saveOnlineUsers = function(err, req, res){
-	if(req.body && req.bydo.username){
+	if(req.body && req.body.username){
 		// 将所有用户的在线状态设置成false
-		User.update({}, { $set: {online: false} }, function(err, users){
+		User.update({}, { $set: {online: false} }, function(err){
 			if(err){
 				console.log(err);
 			}else{
 				// 再设置在线用户的在线状态为true
-				User.find({username: { $in: req.bydo.username }},function(users){
-					users.forEach(function(user){
-						user.online = true;
-						user.save();
-					});
+				var _us = [];
+				_us.push(req.body.username);
+				console.dir(_us);
+				User.find({username: { $in: _us }},function(users){
+					console.dir(users);
+					if(users){
+						console.log(typeof(users));
+						users.forEach(function(user){
+							user.online = true;
+							user.save();
+						});
+					}
+					res.end();
 				});
 			}
 		});
