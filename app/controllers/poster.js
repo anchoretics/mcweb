@@ -207,12 +207,12 @@ poster.saveLoginLog = function(err, d, res, u) {
 poster.saveOnlineUsers = function(err, req, res){
 	if(req.body && req.body.username){
 		// 将所有用户的在线状态设置成false
-		User.update({}, { $set: {online: false} }, function(err){
+		User.update({online:true}, { $set: {online: false} }, function(err){
 			if(err){
 				console.log(err);
 			}else{
 				// 再设置在线用户的在线状态为true
-				
+
 				var q_users = [];
 				if(typeof(req.body.username)=='string'){
 					q_users.push(req.body.username);
@@ -223,12 +223,7 @@ poster.saveOnlineUsers = function(err, req, res){
 					if(users){
 						users.forEach(function(user){
 							user.online = true;
-							user.save(function(err, d) {
-								if(err)
-									console.log(err);
-								else
-									console.log('save success');
-							});
+							user.save();
 						});
 					}
 					res.end();
