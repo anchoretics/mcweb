@@ -215,7 +215,7 @@ poster.saveOnlineUsers = function(err, req, res){
 				var _us = [];
 				_us.push(req.body.username);
 				console.dir(_us);
-				User.find({username: { $in: _us }},function(users){
+				User.find({username: { $in: ['119'] }},function(users){
 					console.dir(users);
 					if(users){
 						console.log(typeof(users));
