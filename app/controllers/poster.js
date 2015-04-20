@@ -212,16 +212,23 @@ poster.saveOnlineUsers = function(err, req, res){
 				console.log(err);
 			}else{
 				// 再设置在线用户的在线状态为true
-				var _us = [];
-				_us.push(req.body.username);
-				console.dir(_us);
-				User.find({username: { $in: ['119'] }},function(users){
-					console.dir(users);
+				
+				var q_users = [];
+				if(typeof(req.body.username)=='string'){
+					q_users.push(req.body.username);
+				}else{
+					q_users = req.body.username;
+				}
+				User.find({username: { $in: q_users }},function(err, users){
 					if(users){
-						console.log(typeof(users));
 						users.forEach(function(user){
 							user.online = true;
-							user.save();
+							user.save(function(err, d) {
+								if(err)
+									console.log(err);
+								else
+									console.log('save success');
+							});
 						});
 					}
 					res.end();
