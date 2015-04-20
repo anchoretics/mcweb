@@ -218,14 +218,10 @@ poster.saveOnlineUsers = function(err, req, res){
 				}else{
 					q_users = req.body.username;
 				}
-				User.find({username: { $in: q_users }},function(err, users){
-					if(users){
-						users.forEach(function(user){
-							user.online = true;
-							user.save();
-						});
-					}
-					res.end();
+
+				User.update({username: {$in: q_users}}, {$set: {online:true}}, function(err) {
+					if(err)
+						console.log(err);
 				});
 			}
 		});
@@ -237,16 +233,10 @@ poster.saveOnlineUsers = function(err, req, res){
 };
 
 poster.serverStarted = function(err, res){
-	User.find({online: true}, function(err, users){
-		if(err){
+	// 服务器启动时将在线用户更新成离线
+	User.update({online:true}, {$set: {online:false}}, function(err) {
+		if(err)
 			console.log(err);
-		}else{
-			users.forEach(function(u){
-				u.online = false;
-				u.save();
-			});
-		}
-		res.end();
 	});
 };
 module.exports = poster;
