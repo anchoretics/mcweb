@@ -237,6 +237,7 @@ poster.serverStarted = function(err, res){
 	User.update({online:true}, {$set: {online:false}}, function(err) {
 		if(err)
 			console.log(err);
+		res.end();
 	});
 };
 module.exports = poster;
