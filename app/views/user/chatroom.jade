@@ -37,7 +37,7 @@ block content
       }
     }
     function addMsg(data){
-      var _date = new Date(data.time);
+      var _date = new Date(data.time||data.meta.createAt||new Date().getTime());
       var time_str = _date.getHours() + ':' + _date.getMinutes() + ':' + _date.getSeconds();
       if(data.username == "#{user.username}"){
         $('#chatPanel').append("<li class='list-group-item' style='text-align:right;'>"+ data.username + " : " + data.msg + "<span style='margin-left:10px;color:gray;'>"+time_str+"</span>" + "</li>");
