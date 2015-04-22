@@ -21,6 +21,7 @@ module.exports = {
 			}
 		});
 		socket.on('new web message', function(data) {
+			data.time = new Date().getTime();
 			if(!socket.username){
 				socket.emit('nologin',data);
 				return;
