@@ -204,6 +204,7 @@ poster.saveLoginLog = function(err, d, res, u) {
 };
 
 poster.saveOnlineUsers = function(err, req, res){
+	console.log(req.body);
 	if(req.body && req.body.username){
 		// 将所有用户的在线状态设置成false
 		User.update({online:true}, { $set: {online: false} }, function(err){
@@ -218,7 +219,7 @@ poster.saveOnlineUsers = function(err, req, res){
 				}else{
 					q_users = req.body.username;
 				}
-
+				console.log(q_users);
 				User.update({username: {$in: q_users}}, {$set: {online:true}}, function(err) {
 					if(err)
 						console.log(err);
