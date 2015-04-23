@@ -220,8 +220,6 @@ poster.saveOnlineUsers = function(err, req, res){
 				}
 				console.log(q_users);
 				User.update({username: {$in: q_users}}, {$set: {online:true}}, { multi: true }, function(err, us, raw) {
-				  console.log(us);
-				  console.log(raw);
 					if(err)
 						console.log(err);
 					res.end();
