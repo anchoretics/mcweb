@@ -222,6 +222,7 @@ poster.saveOnlineUsers = function(err, req, res){
 				User.update({username: {$in: q_users}}, {$set: {online:true}}, function(err) {
 					if(err)
 						console.log(err);
+					res.end();
 				});
 			}
 		});
