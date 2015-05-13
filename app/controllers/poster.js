@@ -13,6 +13,13 @@ poster.post = function(req, res, next){
 		_data.location_y = Math.round(_data.location_y*10)/10;
 		_data.location_z = Math.round(_data.location_z*10)/10;
 	}
+	// 处理时间，统一用服务器的时间
+	if(req.body && req.body.time){
+		req.body.time = new Date().getTime();
+	}
+	if(req.body && req.body.meta && req.body.meta.createAt ){
+		req.body.time = new Date().getTime();
+	}
 	switch(_type){
 		case 'chat':
 			poster.saveChat(null,req.body,req,res);
@@ -227,7 +234,6 @@ poster.saveOnlineUsers = function(err, req, res){
 			}
 		});
 	}else{
-		req.app.socketio.emit('onlineUsers', req.body);
 		res.end();
 	}
 
@@ -235,7 +241,7 @@ poster.saveOnlineUsers = function(err, req, res){
 
 poster.serverStarted = function(err, res){
 	// 服务器启动时将在线用户更新成离线
-	User.update({online:true}, {$set: {online:false}}, function(err) {
+	User.update({online:true}, {$set: {online:false}}, { multi: true }, function(err) {
 		if(err)
 			console.log(err);
 		res.end();
