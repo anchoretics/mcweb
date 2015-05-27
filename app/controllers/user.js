@@ -28,7 +28,11 @@ user.doLogin = function(req, res, next){
                         req.session.cookie.expires = new Date(Date.now() + year);
                         req.session.cookie.maxAge = year;
                     }
-                    res.redirect('/user/info');
+                    if(req.headers.referer){
+                        res.redirect(req.headers.referer);
+                    }else{
+                        res.redirect('/user/info');
+                    }
                 });
             }
     	}
@@ -36,7 +40,11 @@ user.doLogin = function(req, res, next){
 };
 
 user.login = function(req, res, next){
-	res.render('user/login',{title:'登录'});
+    if(req.user){
+        res.redirect('/');
+    }else{
+    	res.render('user/login',{title:'登录'});
+    }
 };
 user.list = function(req, res, next){
     User.paginate({}, req.query.page, req.query.limit, function(err, pageCount, users, itemCount) {

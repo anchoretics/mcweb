@@ -7,18 +7,20 @@ block content
         td(width='120px') 用户名
         td(width='40px') 类型
         td(width='auto') 消息
+        td(width='50') 来源
         td(width='110px') IP地址
         td(width='80px') X
         td(width='50px') Y
         td(width='80px') Z
       each log in logs
         tr
-          td #{ time2string(log.meta.createAt) }
+          td #{ helper.time2string(log.meta.createAt) }
           td
             if log.user
               | #{ log.user.username }
           td #{ log.type }
           td #{ log.message }
+          td #{ log.source || '游戏' }
           td #{ log.hostaddress }
           td #{ Math.round(log.meta.location.x*10)/10 }
           td #{ Math.round(log.meta.location.y*10)/10 }

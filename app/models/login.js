@@ -5,7 +5,7 @@ var LoginSchema = new mongoose.Schema({
 	message: String,
 	hostname: String,
 	hostaddress: String,
-
+	source: String,
 	//type=login,logout
 	type: String,
 	user: {

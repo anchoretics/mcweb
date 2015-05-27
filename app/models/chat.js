@@ -3,7 +3,6 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var ChatSchema = new mongoose.Schema({
 	message: String,
-	format: String,
 	hostname: String,
 	hostaddress: String,
 	source: String,

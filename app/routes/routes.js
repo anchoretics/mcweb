@@ -34,16 +34,17 @@ module.exports = function(app){
 	//聊天室
 	app.get('/user/chatroom', user.authLogin, user.chatroom);
 	
-	//插件提交数据
-	app.post('/post/data', poster.post);
+	// 插件提交数据
+	// app.post('/post/data', poster.post);
 
-
-	app.locals.time2string = function(obj,format){
-		if(!format){
-			format = 'YYYY-MM-DD HH:mm:ss';
-		}
-		if(obj){
-			return moment(new Date(obj)).format(format);
+	app.locals.helper = {
+		time2string: function(obj,format){
+			if(!format){
+				format = 'YYYY-MM-DD HH:mm:ss';
+			}
+			if(obj){
+				return moment(new Date(obj)).format(format);
+			}
 		}
 	};
 

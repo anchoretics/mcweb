@@ -16,7 +16,7 @@ block content
                 | 在线
               else
                 | 离线
-            td #{ time2string(u.meta.lastloginAt) }
+            td #{ helper.time2string(u.meta.lastloginAt) }
     include ../include/_paginate
   script.
     $('#nav_user_online').addClass('active');

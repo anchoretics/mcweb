@@ -5,14 +5,51 @@ var Login = require('../models/login');
 var Command = require('../models/command');
 var app = require('../../app.js');
 
+var WEB_NAME = 'webMessage';
+var GAME_NAME = 'gameMessage';
+
 module.exports = {
 
 	connection: function(socket){
+		//消息分为两种，web端和游戏服务端
+		//webMessage/gameMessage
+		//网页端消息
+		socket.on(WEB_NAME, function(d) {
+			var type = d.type || '';
+			switch(type){
+				case 'chat':
+					break;
+				default:break;
+			}
+		});
+
+		//游戏服务器端消息
+		socket.on(GAME_NAME, function(d) {
+			var token = d.token || false;
+			if(!token || token != '2fsaakEAk3'){
+				socket.disconnect();
+				return false;
+			}
+			var type = d.type || '';
+			switch(type){
+				case 'chat':
+					break;
+				case 'login':
+					break;
+				case 'logout':
+					break;
+				case 'command':
+					break;
+				case 'server_start':
+					break;
+				case 'server_onlineusers':
+					break;
+				default:break;
+			}
+		});
+
 		// 在线聊天
 		socket.on('login', function(data){
-			socket.username = data.username;
-			socket.userID = data.userID;
-			socket.broadcast.emit('user join', { username: socket.username, msg: '进入网站聊天室' });
 		});
 		socket.on('disconnect', function(data){
 			//判断是否有username，有则说明是正常的连接，否则可能是因为断开连接但是网页没关闭引起的username为undefined
@@ -87,7 +124,7 @@ module.exports = {
 						}else{
 							// 广播到web
 							_chatData.username = u.username;
-							app.socketio.emit('game user chat', _chatData);
+							socket.broadcast.emit('game user chat', _chatData);
 						}
 					});
 				}

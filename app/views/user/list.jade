@@ -20,7 +20,7 @@ block content
                 | 在线
               else
                 | 离线
-            td #{ time2string(u.meta.lastloginAt) }
+            td #{ helper.time2string(u.meta.lastloginAt) }
             td #{ u.meta.lasthostaddress }
             td #{ Math.round(u.meta.lastlocation.x*10)/10 }
             td #{ Math.round(u.meta.lastlocation.y*10)/10 }

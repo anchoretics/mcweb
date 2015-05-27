@@ -25,7 +25,7 @@ block content
         td(width='80px') Z
       each log in logs
         tr
-          td #{ time2string(log.meta.createAt) }
+          td #{ helper.time2string(log.meta.createAt) }
           td
             if log.user
               a(href='/user/commandlog?u=#{ log.user._id }') #{ log.user.username }

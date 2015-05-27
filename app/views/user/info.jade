@@ -9,7 +9,7 @@ block content
         else
           | 在线状态：离线
       p.
-        上次登录时间： #{ time2string(user.meta.lastloginAt) }
+        上次登录时间： #{ helper.time2string(user.meta.lastloginAt) }
       p.
         上次登录IP： #{ user.meta.lasthostaddress }
       p.

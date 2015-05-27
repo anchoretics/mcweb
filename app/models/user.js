@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
-var SALT_WORK_FACTOR = 13;
+var SALT_WORK_FACTOR = 10;
 
 var UserSchema = new mongoose.Schema({
-
+	uuid: String,
 	username: {
 		unique: true,
 		type: String,
@@ -18,7 +18,7 @@ var UserSchema = new mongoose.Schema({
  	gamemode: String,
  	op: Boolean,
  	kickmessage: String,
- 	online: { 
+ 	online: {
  		type: Boolean,
  		default: false
  	},
@@ -42,7 +42,8 @@ var UserSchema = new mongoose.Schema({
 			default: new Date().getTime()
 		},
 		lastloginAt: {
-			type: Date
+			type: Number, 
+			default: new Date().getTime()
 		},
 	 	lastlocation: {
 	 		x: String,
