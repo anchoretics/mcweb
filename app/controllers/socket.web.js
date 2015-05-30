@@ -41,7 +41,7 @@ module.exports = {
 				u.meta.lasthostaddress = socket.client.conn.remoteAddress;
 				u.save();
 				data.time = _time;
-				module.exports.saveLoginLog(socket, data, u);
+				//module.exports.saveLoginLog(socket, data, u);
 				socket.username = data.username;
 				socket.userID = data.userID;
 				io.addOnlineUser(data.username);
@@ -55,30 +55,6 @@ module.exports = {
 				io.addOnlineUser(el.username);
 			});
 			socket.emit(io.WEB_NAME, {type: io.MsgType.ONLINEUSERS, users: io.onlineUsers});
-		});
-	},
-	saveLoginLog: function(socket, data, u) {
-		var _login = new Login({
-			type: data.type,
-			user: (u === null) ? null : u._id,
-			message: data.msg,
-			hostname: data.hostname,
-			hostaddress: socket.client.conn.remoteAddress,
-			source: '网站',
-			meta: {
-				createAt: data.time,
-				updateAt: data.time,
-				location: {
-			 		x: data.x,
-			 		y: data.y,
-			 		z: data.z
-				}
-			}
-		});
-		_login.save(function(err, d) {
-			if(err){
-				console.log('saveLoginLog err: ', err);
-			}
 		});
 	}
 };

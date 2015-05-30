@@ -3,7 +3,6 @@
   var socket = io();
   window.socket = socket;
   socket.on('webMessage', function(data){
-      console.dir(data);
       var type = data.type || '';
       switch(type){
         case 'chat':
@@ -34,9 +33,9 @@
     var _date = new Date(data.time||Number(data.meta.createAt)||new Date().getTime());
     var time_str = _date.getHours() + ':' + _date.getMinutes() + ':' + _date.getSeconds();
     if(data.username == username){
-      $('#chatPanel').append("<li class='list-group-item' style='text-align:right;'>"+ data.username + " : " + data.message + "<span style='margin-left:10px;color:gray;'>"+time_str+"</span>" + "</li>");
+      $('#chatPanel').append("<li class='list-group-item' style='text-align:right;'><a href='#' onclick='window.atUser(this);' >"+ data.username + "</a> : " + data.message + "<span style='margin-left:10px;color:gray;'>"+time_str+"</span>" + "</li>");
     }else{
-      $('#chatPanel').append("<li class='list-group-item'>" + "<span style='margin-right:10px;color:gray;'>"+time_str+"</span>" + data.username + " : " + data.message +"</li>");
+      $('#chatPanel').append("<li class='list-group-item'>" + "<span style='margin-right:10px;color:gray;'>"+time_str+"</span><a href='#' onclick='window.atUser(this);' >" + data.username + "</a> : " + data.message +"</li>");
     }
     $('#chatPanel')[0].scrollTop = $('#chatPanel')[0].scrollHeight;
   }
@@ -51,7 +50,7 @@
   function appendOnlineUsers(data){
     $('#listOnlineUser').html('');
     data.users.forEach(function(el, index){
-      $('#listOnlineUser').append("<div class='list-group-item'><a href='#' id='"+ el +"' class='ou'>"+ el +"</a></div>");
+      $('#listOnlineUser').append("<div class='list-group-item'><a href='#' id='"+ el +"' onclick='window.atUser(this);'>"+ el +"</a></div>");
     });
   }
   function sendMsg(){
@@ -78,9 +77,12 @@
   window.mtimer = function(){
     window.socket.emit('webMessage', {type: 'onlineUsers'});
   };
-  setInterval("window.mtimer()", 10000);
-
+  setInterval("window.mtimer()", 20000);
+  //@用户
+  window.atUser = function(obj){
+    $('#inputMessage').val($('#inputMessage').val() + '@' + $(obj).text() + ' ');
+    $('#inputMessage').focus();
+  }
   // 如果未登录，就先登录再发送，其中data是未登录前发送到服务器，并由服务器又原样返回的
   doLogin();
-  $('.ou').on('click', function(){alert(321);});
 })();

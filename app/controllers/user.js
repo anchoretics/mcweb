@@ -28,6 +28,10 @@ user.doLogin = function(req, res, next){
                         req.session.cookie.expires = new Date(Date.now() + year);
                         req.session.cookie.maxAge = year;
                     }
+                    u.meta.lastloginAt = new Date().getTime();
+                    u.meta.lasthostaddress = req.ip;
+                    u.save();
+                    user.saveLoginLog(req, u);
                     if(req.headers.referer){
                         res.redirect(req.headers.referer);
                     }else{
@@ -148,6 +152,24 @@ user.update = function(req, res, next){
     
 };
 
+user.saveLoginLog = function(req, u) {
+    var _time = new Date().getTime();
+    var _login = new Login({
+        type: 'login',
+        user: (u === null) ? null : u._id,
+        hostaddress: req.ip,
+        source: '网站',
+        meta: {
+            createAt: _time,
+            updateAt: _time
+        }
+    });
+    _login.save(function(err, d) {
+        if(err){
+            console.log('saveLoginLog err: ', err);
+        }
+    });
+};
 user.authLogin = function(req, res, next){
     if(!req.session.passport.user){
         res.render('user/login',{error: '你需要登录才能操作! 用户名密码是你登录游戏的用户名密码'});

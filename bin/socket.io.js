@@ -27,8 +27,8 @@ module.exports = function(server){
 			if(el == username){
 				//删除index开始的1个元素
 				io.onlineUsers.splice(index,1);
-				io.emit(io.WEB_NAME, {type:'weblogout', username: username });
-				io.emit(io.GAME_NAME, {type:'weblogout', username: username });
+				io.emit(io.WEB_NAME, {type:'logout', username: username });
+				io.emit(io.GAME_NAME, {type:'logout', username: username });
 			}
 		});
 	};
@@ -48,6 +48,7 @@ module.exports = function(server){
 			// 登录
 			if(type == io.MsgType.LOGIN){
 				webController.login(socket, io, d);
+				webController.getOnlineUsers(socket, io);
 			}else if(!socket.username || !socket.userID){
 				socket.emit(io.WEB_NAME, {type: 'nologin', data: d});
 			}else{
