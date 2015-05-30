@@ -36,29 +36,29 @@ module.exports = function(server){
 		CHAT : 'chat',
 		LOGIN : 'login',
 		LOGOUT : 'logout',
-
+		ONLINEUSERS: 'onlineUsers'
 	};
 	io.on('connection', function(socket) {
 		//消息分为两种，web端和游戏服务端
 		//webMessage/gameMessage
 		//网页端消息
 		socket.on(io.WEB_NAME, function(d) {
-			console.log('d: ', d);
+			console.log('data: ', d);
 			var type = d.type || '';
 			// 登录
 			if(type == io.MsgType.LOGIN){
 				webController.login(socket, io, d);
 			}else if(!socket.username || !socket.userID){
-				socket.disconnect();
+				socket.emit(io.WEB_NAME, {type: 'nologin', data: d});
 			}else{
 				switch(type){
-					case 'chat':
+					case io.MsgType.CHAT:
 						webController.chat(socket, io, d);
 						break;
-					case 'login':
+					case io.MsgType.LOGIN:
 						webController.login(socket, io, d);
 						break;
-					case 'getOnlineUsers':
+					case io.MsgType.ONLINEUSERS:
 						webController.getOnlineUsers(socket, io);
 						break;
 					default:break;

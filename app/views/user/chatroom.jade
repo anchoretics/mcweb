@@ -16,9 +16,7 @@ block content
         .panel.panel-default
           .panel-heading
             | 在线玩家
-          ul.list-group
-            .list-group-item
-              a(href='#') No1.
+          ul.list-group#listOnlineUser
   style.
     #chatPanel{
       height: 400px;
@@ -27,10 +25,13 @@ block content
     .chatArea {
       height: 100%;
     }
+    .list-group-item{
+      padding: 5px 10px;
+    }
   script.
     $('#nav_user_chatroom').addClass('active');
   script(src='/socket.io/socket.io.js')
-  script(src='/js/chatroom.js')
   script.
     var username = '#{user.username}';
     var userID = '#{user._id}';
+  script(src='/js/chatroom.js')
