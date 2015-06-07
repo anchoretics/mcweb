@@ -1,4 +1,4 @@
-/node_modules/
+/node_modules/**
 huffman-code.sublime-workspace
 huffman-code.sublime-project
 app/uploads/
