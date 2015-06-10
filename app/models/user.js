@@ -9,10 +9,6 @@ var UserSchema = new mongoose.Schema({
 		type: String,
 		index: true
  	},
- 	customname: String,
- 	displayname: String,
- 	name: String,
- 	listname: String,
  	allowfly: Boolean,
  	world: String,
  	gamemode: String,

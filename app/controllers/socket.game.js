@@ -56,39 +56,7 @@ module.exports = {
 					}
 					else{
 						module.exports.saveLoginLog(data, u);
-						io.emit(io.WEB_NAME, {type: io.MsgType.LOGIN, username: socket.username, msg: '进入游戏' });
-					}
-				});
-			}else{
-				var _user = new User({
-					username: data.name,
-					customname: data.customname,
-					displayname: data.displayname,
-					name: data.name,
-					listname: data.listname,
-					allowfly: data.allowfly == 'true',
-					world: data.world,
-					gamemode: data.gamemode,
-					password: '123456',
-					online: true,
-					meta: {
-						createAt: data.time,
-						updateAt: data.time,
-						lastloginAt: data.time,
-					 	lastlocation: {
-					 		x: data.x,
-					 		y: data.y,
-					 		z: data.z
-					 	},
-					 	lasthostaddress: data.hostaddress
-					}
-				});
-				_user.save(function(err) {
-					if(err){
-						console.log(err);
-					}else{
-						module.exports.saveLoginLog(data, _user);
-						io.emit(io.WEB_NAME, {type: io.MsgType.LOGIN, username: socket.username, msg: '进入游戏' });
+						io.emit(io.WEB_NAME, {type: io.MsgType.LOGIN, username: data.name, msg: '进入游戏' });
 					}
 				});
 			}
@@ -101,9 +69,46 @@ module.exports = {
 				u.online = false;
 				u.save();
 				module.exports.saveLoginLog(data, u);
-				io.emit(io.WEB_NAME, { username: socket.username, msg: '离开游戏' });
-				console.log('time used: ', new Date().getTime() - io.t1);
+				io.emit(io.WEB_NAME, { type: 'logout', username: data.name, msg: '离开游戏' });
 			}
+		});
+	},
+	register: function(socket, io, data){
+		var _user = new User({
+			username: data.name,
+			password: data.password,
+			allowfly: data.allowfly,
+			world: data.world,
+			gamemode: data.gamemode,
+			op: false,
+			online: true,
+			meta: {
+				createAt: data.time,
+				updateAt: data.time,
+				lastloginAt: data.time,
+				lastlocation: {
+					x: data.x,
+					y: data.y,
+					z: data.z
+				},
+				lasthostaddress: data.hostaddress
+			}
+		});
+		_user.save(function(err){
+	        if(err){
+	            console.log(err);
+	        }else{
+		        console.log('register success');
+	        }
+		});
+	},
+	unregister: function(socket, io, data){
+		User.remove({username: data.name}, function(err){
+	        if(err){
+	            console.log(err);
+	        }else{
+		        console.log('unregister success');
+	        }
 		});
 	},
 	command: function(socket, io, data) {
@@ -115,7 +120,7 @@ module.exports = {
 			if(u){
 				var _command = new Command({
 					user: u._id,
-					message: data.message,
+					message: data.msg,
 					hostname: data.hostname,
 					hostaddress: data.hostaddress,
 					meta: {
@@ -141,6 +146,7 @@ module.exports = {
 		User.update({}, {$set: {online:false}}, { multi: true }, function(err) {
 			if(err)
 				console.log(err);
+			console.log('server_start processed');
 		});
 	},
 	server_onlineusers: function(socket, io, data) {
@@ -153,6 +159,7 @@ module.exports = {
 				User.update({username: {$in: data.users}}, {$set: {online:true}}, { multi: true }, function(err, raw) {
 					if(err)
 						console.log(err);
+					console.log('server_onlineusers processed');
 				});
 			}
 		});

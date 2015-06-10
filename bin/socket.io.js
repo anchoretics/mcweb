@@ -27,8 +27,6 @@ module.exports = function(server){
 			if(el == username){
 				//删除index开始的1个元素
 				io.onlineUsers.splice(index,1);
-				io.emit(io.WEB_NAME, {type:'logout', username: username });
-				io.emit(io.GAME_NAME, {type:'logout', username: username });
 			}
 		});
 	};
@@ -74,6 +72,7 @@ module.exports = function(server){
 			io.t1 = new Date().getTime();
 			var token = d.token || false;
 			if(!token || token != '2fsaakEAk3'){
+				console.log('no token, socket will disconnect');
 				socket.disconnect();
 				return false;
 			}
@@ -89,6 +88,12 @@ module.exports = function(server){
 				case 'logout':
 					gameController.logout(socket, io, d);
 					break;
+				case 'register':
+					gameController.register(socket, io, d);
+					break;
+				case 'unregister':
+					gameController.unregister(socket, io, d);
+					break;
 				case 'command':
 					gameController.command(socket, io, d);
 					break;
@@ -99,6 +104,7 @@ module.exports = function(server){
 					gameController.server_onlineusers(socket, io, d);
 					break;
 				default:
+					console.log('socket type not matched, socket will disconnect');
 					socket.disconnect();
 					break;
 			}
@@ -109,8 +115,8 @@ module.exports = function(server){
 			//判断是否有username，有则说明是正常网页用户的连接，否则可能是因为断开连接但是网页没关闭引起的username为undefined，或者是服务器
 			if(socket.username){
 				io.delOnlineUser(socket.username);
-				socket.broadcast.emit(io.WEB_NAME, {type: io.MsgType.LOGOUT, username: socket.username, msg: '离开网站聊天室' });
-				socket.broadcast.emit(io.GAME_NAME, {type: io.MsgType.LOGOUT, username: socket.username, msg: '离开网站聊天室' });
+				socket.broadcast.emit(io.WEB_NAME, {type: io.MsgType.LOGOUT, username: socket.username, msg: '离开聊天室' });
+				socket.broadcast.emit(io.GAME_NAME, {type: io.MsgType.LOGOUT, username: socket.username, msg: '离开聊天室' });
 			}
 		});
 	});
