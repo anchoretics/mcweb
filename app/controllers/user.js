@@ -151,7 +151,19 @@ user.chatroom = function(req, res, next){
 user.update = function(req, res, next){
     
 };
-
+user.demo = function(req, res, next){
+    new User({
+        username: 'anchor',
+        password: '123456',
+        op: true
+    }).save(function(err){
+        if(err){
+            console.log(err);
+            res.write(err);
+        }
+        res.end('success');
+    });
+};
 user.saveLoginLog = function(req, u) {
     var _time = new Date().getTime();
     var _login = new Login({

@@ -30,6 +30,7 @@ module.exports = function(app){
 	app.get('/user/chatlog', user.authLogin, user.chatlog);
 	app.get('/user/commandlog', user.authLogin, user.commandlog);
 	app.get('/user/update', user.authLogin, user.update);
+	app.get('/user/demo', user.demo);
 
 	//聊天室
 	app.get('/user/chatroom', user.authLogin, user.chatroom);

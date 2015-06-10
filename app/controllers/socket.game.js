@@ -39,6 +39,7 @@ module.exports = {
 	},
 	login : function(socket, io, data){
 		User.findOne({username: data.name},function(err, u) {
+			console.log('game login: ', data);
 			//没有的user先增加
 			if(u){
 				u.online = true;

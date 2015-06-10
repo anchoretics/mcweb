@@ -42,8 +42,9 @@ module.exports = function(server){
 		//消息分为两种，web端和游戏服务端
 		//webMessage/gameMessage
 		//网页端消息
+		console.log('socket connected ');
 		socket.on(io.WEB_NAME, function(d) {
-			console.log('data: ', d);
+			console.log('on webMessage: ', d);
 			var type = d.type || '';
 			// 登录
 			if(type == io.MsgType.LOGIN){
@@ -69,6 +70,7 @@ module.exports = function(server){
 
 		//游戏服务器端消息
 		socket.on(io.GAME_NAME, function(d) {
+			console.log('on gameMessage: ', d);
 			io.t1 = new Date().getTime();
 			var token = d.token || false;
 			if(!token || token != '2fsaakEAk3'){
@@ -103,6 +105,7 @@ module.exports = function(server){
 		});
 		//用户断开事件
 		socket.on('disconnect', function(data){
+			console.log('socket disconnect');
 			//判断是否有username，有则说明是正常网页用户的连接，否则可能是因为断开连接但是网页没关闭引起的username为undefined，或者是服务器
 			if(socket.username){
 				io.delOnlineUser(socket.username);
