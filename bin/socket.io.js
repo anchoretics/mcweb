@@ -7,6 +7,7 @@ var gameController = require('../app/controllers/socket.game');
 module.exports = function(server){
 
 	var io = new socketio(server);
+	io.token = '2fsaakEAk3';
 	io.WEB_NAME = 'webMessage';
 	io.GAME_NAME = 'gameMessage';
 	io.onlineUsers = [];
@@ -40,7 +41,7 @@ module.exports = function(server){
 		//消息分为两种，web端和游戏服务端
 		//webMessage/gameMessage
 		//网页端消息
-		console.log('socket connected ');
+		console.log('socket connected :', io.token);
 		socket.on(io.WEB_NAME, function(d) {
 			console.log('on webMessage: ', d);
 			var type = d.type || '';
@@ -71,7 +72,7 @@ module.exports = function(server){
 			console.log('on gameMessage: ', d);
 			io.t1 = new Date().getTime();
 			var token = d.token || false;
-			if(!token || token != '2fsaakEAk3'){
+			if(!token || token != io.token){
 				console.log('no token, socket will disconnect');
 				socket.disconnect();
 				return false;
@@ -116,7 +117,7 @@ module.exports = function(server){
 			if(socket.username){
 				io.delOnlineUser(socket.username);
 				socket.broadcast.emit(io.WEB_NAME, {type: io.MsgType.LOGOUT, username: socket.username, msg: '离开聊天室' });
-				socket.broadcast.emit(io.GAME_NAME, {type: io.MsgType.LOGOUT, username: socket.username, msg: '离开聊天室' });
+				socket.broadcast.emit(io.GAME_NAME, {type: io.MsgType.LOGOUT,token: io.token, username: socket.username, msg: '离开聊天室' });
 			}
 		});
 	});

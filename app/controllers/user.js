@@ -155,7 +155,14 @@ user.demo = function(req, res, next){
     new User({
         username: 'anchor',
         password: '123456',
-        op: true
+        op: true,
+        meta: {
+            lastlocation: {
+                x:0,
+                y:0,
+                z:0
+            }
+        }
     }).save(function(err){
         if(err){
             console.log(err);

@@ -25,6 +25,7 @@ module.exports = {
 				// 广播到web
 				_chatData.username = socket.username;
 				_chatData.type = io.MsgType.CHAT;
+				_chatData.token = io.token;
 				console.log('chat: ', _chatData.message);
 				io.emit(io.WEB_NAME, _chatData);
 				io.emit(io.GAME_NAME, _chatData);
@@ -47,7 +48,7 @@ module.exports = {
 				socket.userID = data.userID;
 				io.addOnlineUser(data.username);
 				io.emit(io.WEB_NAME, {type: io.MsgType.LOGIN, username: socket.username, message: '进入聊天室' });
-				io.emit(io.GAME_NAME, {type: io.MsgType.LOGIN, username: socket.username });
+				io.emit(io.GAME_NAME, {type: io.MsgType.LOGIN, token: io.token, username: socket.username });
 			}
 		});
 	},
