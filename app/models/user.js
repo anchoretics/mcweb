@@ -14,6 +14,10 @@ var UserSchema = new mongoose.Schema({
  	gamemode: String,
  	op: Boolean,
  	kickmessage: String,
+ 	whitelist: {
+ 		type: Boolean,
+ 		default: false
+ 	},
  	online: {
  		type: Boolean,
  		default: false

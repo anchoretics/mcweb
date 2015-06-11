@@ -7,7 +7,7 @@ module.exports = {
 	chat: function(socket, io, data){
 		var time = new Date().getTime();
 		var _chatData = {
-			message: data.msg,
+			message: data.message,
 			hostname: data.hostname,
 			hostaddress: socket.client.conn.remoteAddress,
 			source: '网站',

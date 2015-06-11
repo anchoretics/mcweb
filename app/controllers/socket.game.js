@@ -56,7 +56,7 @@ module.exports = {
 					}
 					else{
 						module.exports.saveLoginLog(data, u);
-						io.emit(io.WEB_NAME, {type: io.MsgType.LOGIN, username: data.name, msg: '进入游戏' });
+						io.emit(io.WEB_NAME, {type: io.MsgType.LOGIN, username: data.name, message: '进入游戏' });
 					}
 				});
 			}
@@ -69,7 +69,7 @@ module.exports = {
 				u.online = false;
 				u.save();
 				module.exports.saveLoginLog(data, u);
-				io.emit(io.WEB_NAME, { type: 'logout', username: data.name, msg: '离开游戏' });
+				io.emit(io.WEB_NAME, { type: 'logout', username: data.name, message: '离开游戏' });
 			}
 		});
 	},

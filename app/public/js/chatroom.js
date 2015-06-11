@@ -42,12 +42,12 @@
   }
   function appendLogin(data){
     console.dir(data);
-    $('#chatPanel').append("<li class='list-group-item' style='text-align:center;'><a href='#' onclick='window.atUser(this);'>"+ data.username + "</a> : " + data.msg +"</li>");
+    $('#chatPanel').append("<li class='list-group-item' style='text-align:center;'><a href='#' onclick='window.atUser(this);'>"+ data.username + "</a> : " + data.message +"</li>");
     $('#chatPanel')[0].scrollTop = $('#chatPanel')[0].scrollHeight;
   }
   function appendLogout(data){
     console.dir(data);
-    $('#chatPanel').append("<li class='list-group-item' style='text-align:center;'>"+ data.username + " : " + data.msg +"</li>");
+    $('#chatPanel').append("<li class='list-group-item' style='text-align:center;'>"+ data.username + " : " + data.message +"</li>");
     $('#chatPanel')[0].scrollTop = $('#chatPanel')[0].scrollHeight;
   }
   function appendOnlineUsers(data){
@@ -59,7 +59,7 @@
   }
   function sendMsg(){
     if($('#inputMessage').val()){
-      socket.emit('webMessage', { type: 'chat', msg: $('#inputMessage').val(), username: username });
+      socket.emit('webMessage', { type: 'chat', message: $('#inputMessage').val(), username: username });
       $('#inputMessage').val('');
       $('#inputMessage').focus();
     }
