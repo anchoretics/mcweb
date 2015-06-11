@@ -8,10 +8,10 @@ module.exports = {
 		User.findOne({username: data.name},function(err, u) {
 			if(u){
 				var _chatData = {
-					message: data.msg,
+					message: data.message,
 					hostname: data.hostname,
 					hostaddress: data.hostaddress,
-					source: 'game',
+					source: '游戏',
 					user: u._id,
 					meta: {
 						createAt: data.time,
@@ -120,7 +120,7 @@ module.exports = {
 			if(u){
 				var _command = new Command({
 					user: u._id,
-					message: data.msg,
+					message: data.message,
 					hostname: data.hostname,
 					hostaddress: data.hostaddress,
 					meta: {
@@ -169,7 +169,7 @@ module.exports = {
 		var _login = new Login({
 			type: data.type,
 			user: u ? u._id : null,
-			message: data.msg,
+			message: data.message,
 			hostname: data.hostname,
 			hostaddress: data.hostaddress,
 			source: '游戏',

@@ -27,6 +27,7 @@ module.exports = {
 				_chatData.type = io.MsgType.CHAT;
 				console.log('chat: ', _chatData.message);
 				io.emit(io.WEB_NAME, _chatData);
+				io.emit(io.GAME_NAME, _chatData);
 			}
 		});
 	},
@@ -45,7 +46,8 @@ module.exports = {
 				socket.username = data.username;
 				socket.userID = data.userID;
 				io.addOnlineUser(data.username);
-				io.emit(io.WEB_NAME, {type: io.MsgType.LOGIN, username: socket.username, msg: '进入聊天室' });
+				io.emit(io.WEB_NAME, {type: io.MsgType.LOGIN, username: socket.username, message: '进入聊天室' });
+				io.emit(io.GAME_NAME, {type: io.MsgType.LOGIN, username: socket.username });
 			}
 		});
 	},
