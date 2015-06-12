@@ -1,7 +1,7 @@
 var express = require('express');
 var index = require('../controllers/index');
 var user = require('../controllers/user');
-var poster = require('../controllers/poster');
+var op = require('../controllers/op/op');
 var moment = require('moment');
 var socket = require('socket.io');
 var passport = require('passport');
@@ -35,8 +35,8 @@ module.exports = function(app){
 	//聊天室
 	app.get('/user/chatroom', user.authLogin, user.chatroom);
 	
-	// 插件提交数据
-	// app.post('/post/data', poster.post);
+	// op 管理
+	app.get('/op/whitelist', user.authLogin, user.authOp, op.whitelist);
 
 	app.locals.helper = {
 		time2string: function(obj,format){

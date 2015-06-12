@@ -196,5 +196,12 @@ user.authLogin = function(req, res, next){
         next();
     }
 };
+user.authOp = function(req, res, next){
+    if(req.session.passport.user.op){
+        next();
+    }else{
+        next({message:'你无权访问此页'});
+    }
+};
 
 module.exports = user;
