@@ -16,6 +16,9 @@ module.exports = function(app){
 	});
 	//首页
 	app.get('/', index.index);
+	app.get('/download', function(req, res){
+		res.render('download');
+	});
 
 	//用户管理
 	app.get('/user/list', user.list);
