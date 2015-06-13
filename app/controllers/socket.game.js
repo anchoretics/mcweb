@@ -74,32 +74,59 @@ module.exports = {
 		});
 	},
 	register: function(socket, io, data){
-		var _user = new User({
-			username: data.name,
-			password: data.password,
-			allowfly: data.allowfly,
-			world: data.world,
-			gamemode: data.gamemode,
-			op: false,
-			online: true,
-			meta: {
-				createAt: data.time,
-				updateAt: data.time,
-				lastloginAt: data.time,
-				lastlocation: {
-					x: data.x,
-					y: data.y,
-					z: data.z
-				},
-				lasthostaddress: data.hostaddress
+		User.findOne({username: data.name}, function(err, u){
+			if(err){
+				console.log(err);
 			}
-		});
-		_user.save(function(err){
-	        if(err){
-	            console.log(err);
-	        }else{
-		        console.log('register success');
-	        }
+			if(u){
+				if(!u.password){
+					//没有密码，就是网站添加的用户，初次注册
+					u.changePwd(data.password);
+					u.online = true;
+					u.meta.lastloginAt = data.time;
+					u.lastlocation = {
+						x: data.x,
+						y: data.y,
+						z: data.z
+					};
+					u.save(function(err){
+				        if(err){
+				            console.log(err);
+				        }else{
+					        console.log('register1 success');
+				        }
+					});
+				}
+			}else{
+				var _user = new User({
+					username: data.name,
+					password: data.password,
+					allowfly: data.allowfly,
+					world: data.world,
+					gamemode: data.gamemode,
+					op: false,
+					online: true,
+					meta: {
+						createAt: data.time,
+						updateAt: data.time,
+						lastloginAt: data.time,
+						lastlocation: {
+							x: data.x,
+							y: data.y,
+							z: data.z
+						},
+						lasthostaddress: data.hostaddress
+					}
+				});
+				_user.save(function(err){
+			        if(err){
+			            console.log(err);
+			        }else{
+				        console.log('register2 success');
+			        }
+				});
+				
+			}
 		});
 	},
 	unregister: function(socket, io, data){

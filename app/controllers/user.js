@@ -153,7 +153,7 @@ user.update = function(req, res, next){
 };
 user.demo = function(req, res, next){
     new User({
-        username: 'anchor',
+        username: 'anchor1',
         password: '123456',
         op: true,
         meta: {

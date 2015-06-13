@@ -9,25 +9,16 @@ var UserSchema = new mongoose.Schema({
 		type: String,
 		index: true
  	},
+  	password: String,
+
  	allowfly: Boolean,
  	world: String,
  	gamemode: String,
  	op: Boolean,
- 	kickmessage: String,
- 	whitelist: {
- 		type: Boolean,
- 		default: false
- 	},
- 	online: {
- 		type: Boolean,
- 		default: false
- 	},
-  	password: String,
-	  // 0: nomal user
-	  // 1: verified user
-	  // 2: professonal user
-	  // >10: admin
-	  // >50: super admin
+ 	whitelist: Boolean,
+ 	ban: Boolean,
+ 	banip: Boolean,
+ 	online: Boolean,
 	role: {
 		type: Number,
 		default: 0
@@ -57,9 +48,11 @@ var UserSchema = new mongoose.Schema({
 UserSchema.pre('save', function(next) {
 	var user = this;
 	if (this.isNew) {
-		var salt = bcrypt.genSaltSync(SALT_WORK_FACTOR);
-		user.password = bcrypt.hashSync(user.password, salt);
-		this.meta.createAt = this.meta.updateAt = Date.now();
+		if(this.password){
+			var salt = bcrypt.genSaltSync(SALT_WORK_FACTOR);
+			user.password = bcrypt.hashSync(user.password, salt);
+			this.meta.createAt = this.meta.updateAt = Date.now();
+		}
 	}
 	else {
 		this.meta.updateAt = Date.now();

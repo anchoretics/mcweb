@@ -2,9 +2,7 @@ var socketio = require('socket.io');
 var webController = require('../app/controllers/socket.web');
 var gameController = require('../app/controllers/socket.game');
 
-
-
-module.exports = function(server){
+module.exports = function(server, app){
 
 	var io = new socketio(server);
 	io.token = '2fsaakEAk3';
@@ -35,7 +33,8 @@ module.exports = function(server){
 		CHAT : 'chat',
 		LOGIN : 'login',
 		LOGOUT : 'logout',
-		ONLINEUSERS: 'onlineUsers'
+		ONLINEUSERS: 'onlineUsers',
+		COMMAND: 'command'
 	};
 	io.on('connection', function(socket) {
 		//消息分为两种，web端和游戏服务端
@@ -121,4 +120,6 @@ module.exports = function(server){
 			}
 		});
 	});
+	app.socketio = io;
+	return io;
 };

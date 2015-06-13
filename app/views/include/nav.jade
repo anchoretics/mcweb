@@ -25,7 +25,7 @@
             li#nav_user_commandlog
               a(href='/user/commandlog') 指令记录
         if user && user.op
-          li.dropdown
+          li.dropdown#nav_op
             a.dropdown-toggle(href="#",data-toggle="dropdown" role="button" aria-expanded="false") 管理
               span.caret
             ul.dropdown-menu(role="menu")

@@ -1,0 +1,85 @@
+extends layout
+block content
+  .container
+    .row
+      .panel.panel-primary
+        .panel-heading 添加白名单
+        .panel-body
+          form.form-inline
+            .form-group
+              label(for='inputName') 输入名字：
+              input.form-control#inputName(name='username',type='text',placeholder='小写的名字',style='text-transform:lowercase;')
+              input.btn.btn-success(type='button', value='添加', onclick='addName();')
+    .row
+      .table-responsive
+        table.table.table-bordered.table-hover
+          tr.success
+            td 用户名
+            td 在线状态
+            td 上次登录时间
+            td 上次登录IP
+            td x
+            td Y
+            td Z
+            td 白名单
+          each u in users
+            tr
+              td #{u.username}
+              td
+                if u.online
+                  | 在线
+                else
+                  | 离线
+              td #{ helper.time2string(u.meta.lastloginAt) }
+              td #{ u.meta.lasthostaddress }
+              td #{ Math.round(u.meta.lastlocation.x*10)/10 }
+              td #{ Math.round(u.meta.lastlocation.y*10)/10 }
+              td #{ Math.round(u.meta.lastlocation.z*10)/10 }
+              td
+                if u.whitelist
+                  input.btn.btn-default.btn-xs(type='button',value='加入',disabled='disabled')
+                  input.btn.btn-success.btn-xs(type='button',value='移除',onclick='del(this);',data-id='#{u._id}')
+                else
+                  input.btn.btn-success.btn-xs(type='button',value='加入',onclick='add(this);',data-id='#{u._id}')
+                  input.btn.btn-default.btn-xs(type='button',value='移除',disabled='disabled')
+      include ../include/_paginate
+  script.
+    $('#nav_op').addClass('active');
+    function addName(){
+      console.dir($('#inputName').val());
+      if(!$('#inputName').val()){
+        $('#inputName').focus();
+        return;
+      }
+      if($('#inputName').val().length < 3){
+        alert('名字不得少于3位');
+        $('#inputName').focus();
+        return;
+      }
+      $.post('whitelist',{username: $('#inputName').val()},function(data){
+          if(data=='success'){
+            window.location.href = window.location.href;
+          }else{
+            alert(data);
+          }
+        });
+    }
+    function add(btn){
+      $.post('whitelist',{id:$(btn).data('id')},function(data){
+          if(data=='success'){
+            window.location.href = window.location.href;
+          }else{
+            alert(data);
+          }
+        });
+    }
+    function del(btn){
+      $.post('whitelist/remove',{id:$(btn).data('id')},function(data){
+          if(data=='success'){
+            window.location.href = window.location.href;
+          }else{
+            alert(data);
+          }
+        });
+    }
+  

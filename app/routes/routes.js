@@ -1,7 +1,7 @@
 var express = require('express');
 var index = require('../controllers/index');
 var user = require('../controllers/user');
-var op = require('../controllers/op/op');
+var whitelist = require('../controllers/op/whitelist');
 var moment = require('moment');
 var socket = require('socket.io');
 var passport = require('passport');
@@ -39,7 +39,9 @@ module.exports = function(app){
 	app.get('/user/chatroom', user.authLogin, user.chatroom);
 	
 	// op 管理
-	app.get('/op/whitelist', user.authLogin, user.authOp, op.whitelist);
+	app.get('/op/whitelist', user.authLogin, user.authOp, whitelist.list);
+	app.post('/op/whitelist', user.authLogin, user.authOp, whitelist.add);
+	app.post('/op/whitelist/remove', user.authLogin, user.authOp, whitelist.remove);
 
 	app.locals.helper = {
 		time2string: function(obj,format){
