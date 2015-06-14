@@ -2,6 +2,7 @@ var express = require('express');
 var index = require('../controllers/index');
 var user = require('../controllers/user');
 var whitelist = require('../controllers/op/whitelist');
+var mcServer = require('../controllers/op/server');
 var moment = require('moment');
 var socket = require('socket.io');
 var passport = require('passport');
@@ -42,6 +43,10 @@ module.exports = function(app){
 	app.get('/op/whitelist', user.authLogin, user.authOp, whitelist.list);
 	app.post('/op/whitelist', user.authLogin, user.authOp, whitelist.add);
 	app.post('/op/whitelist/remove', user.authLogin, user.authOp, whitelist.remove);
+
+	app.get('/op/server', user.authLogin, user.authOp, mcServer.index);
+	app.post('/op/server/restart', user.authLogin, user.authOp, mcServer.restart);
+
 
 	app.locals.helper = {
 		time2string: function(obj,format){

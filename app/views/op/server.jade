@@ -1,0 +1,20 @@
+extends layout
+block content
+  .container
+    .row
+      .panel.panel-primary
+        .panel-heading 服务器管理
+        .panel-body
+          form.form-inline
+            .form-group
+              input.btn.btn-success(type='button', value='重启', onclick='restart();')
+  script.
+    function restart(){
+      $.post('server/restart', null, function(data){
+          if(data=='success'){
+            alert(data);
+          }else{
+            alert(data);
+          }
+        });
+    }
